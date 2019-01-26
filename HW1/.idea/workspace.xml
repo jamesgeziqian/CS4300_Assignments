@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/SingleChar.java" line="248" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/SingleChar.java" line="262" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="210535df-51ce-4d98-96cf-bebb8e19766e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/SingleChar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Hw1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Hw1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/JOGLFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JOGLFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SingleChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SingleChar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SingleDigit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SingleDigit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TwoDots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TwoDots.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/VertexAttrib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VertexAttrib.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/VertexAttribProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VertexAttribProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Hw1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Hw1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Hw1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Hw1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/JOGLFrame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/JOGLFrame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/JOGLFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/JOGLFrame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SingleDigit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SingleDigit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SingleChar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SingleChar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TwoDots.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TwoDots.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Utility.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Utility.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/VertexAttrib.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/VertexAttrib.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/VertexAttribProducer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/VertexAttribProducer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/View.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,108 +20,118 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/View.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="111" column="39" lean-forward="true" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/TwoDots.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Hw1.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-              <folding>
-                <element signature="e#282#283#0" expanded="true" />
-                <element signature="e#318#319#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/SingleChar.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/VertexAttrib.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-179">
-              <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/JOGLFrame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Utility.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#934#935#0" expanded="true" />
-                <element signature="e#1005#1006#0" expanded="true" />
-                <element signature="e#1032#1033#0" expanded="true" />
-                <element signature="e#1098#1099#0" expanded="true" />
-                <element signature="e#1125#1126#0" expanded="true" />
-                <element signature="e#1191#1192#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/VertexAttribProducer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/SingleDigit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2586">
-              <caret line="61" column="16" lean-forward="true" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/View.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1615">
+                  <caret line="111" column="39" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/TwoDots.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="855">
+                  <caret line="56" column="5" lean-forward="true" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/Hw1.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="380">
+                  <caret line="22" selection-start-line="22" selection-end-line="22" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/SingleChar.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="435">
+                  <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/VertexAttrib.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="456">
+                  <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/JOGLFrame.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="573">
+                  <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/Utility.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="720">
+                  <caret line="46" selection-start-line="46" selection-end-line="46" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/VertexAttribProducer.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="57">
+                  <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/SingleDigit.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="133">
+                  <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/SingleDigit.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="76">
+                  <caret line="55" column="5" lean-forward="true" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="46" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -155,13 +150,13 @@
         <option value="$PROJECT_DIR$/src/main/java/TimeConvert.java" />
         <option value="$PROJECT_DIR$/src/main/java/Hw1.java" />
         <option value="$PROJECT_DIR$/src/main/java/JOGLFrame.java" />
-        <option value="$PROJECT_DIR$/src/main/java/TwoDots.java" />
         <option value="$PROJECT_DIR$/src/main/java/VertexAttrib.java" />
         <option value="$PROJECT_DIR$/src/main/java/VertexAttribProducer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/SingleDigit.java" />
         <option value="$PROJECT_DIR$/src/main/java/Utility.java" />
-        <option value="$PROJECT_DIR$/src/main/java/SingleChar.java" />
         <option value="$PROJECT_DIR$/src/main/java/View.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TwoDots.java" />
+        <option value="$PROJECT_DIR$/src/main/java/SingleDigit.java" />
+        <option value="$PROJECT_DIR$/src/main/java/SingleChar.java" />
       </list>
     </option>
   </component>
@@ -225,14 +220,14 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548530688178" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548532270642" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
@@ -274,18 +269,19 @@
       <option name="presentableId" value="Default" />
       <updated>1548482447945</updated>
       <workItem from="1548482449185" duration="1957000" />
-      <workItem from="1548520603645" duration="10074000" />
+      <workItem from="1548520603645" duration="10214000" />
+      <workItem from="1548531011309" duration="1259000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12031000" />
+    <option name="totallyTimeSpent" value="13430000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1933" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14666666" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14826667" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -293,10 +289,9 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info id="Learn" order="7" />
-      <window_info anchor="bottom" id="Duplicate detector" weight="0.329718" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -307,6 +302,7 @@
       <window_info anchor="bottom" id="Messages" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="bottom" id="Duplicate detector" order="13" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -322,48 +318,25 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/TimeConvert.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Hw1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#282#283#0" expanded="true" />
-            <element signature="e#318#319#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/JOGLFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TwoDots.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SingleDigit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2586">
-          <caret line="61" column="16" lean-forward="true" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TimeConvert.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/Calendar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1485">
           <caret line="312" column="22" selection-start-line="312" selection-start-column="22" selection-end-line="312" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Hw1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/VertexAttrib.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -374,40 +347,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/VertexAttrib.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-179">
-          <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
+        <state relative-caret-position="1615">
+          <caret line="111" column="39" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utility.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="720">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#934#935#0" expanded="true" />
-            <element signature="e#1005#1006#0" expanded="true" />
-            <element signature="e#1032#1033#0" expanded="true" />
-            <element signature="e#1098#1099#0" expanded="true" />
-            <element signature="e#1125#1126#0" expanded="true" />
-            <element signature="e#1191#1192#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/View.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/JOGLFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="111" column="39" lean-forward="true" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
+        <state relative-caret-position="573">
+          <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TwoDots.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="56" column="5" lean-forward="true" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SingleDigit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SingleChar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        <state relative-caret-position="435">
+          <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

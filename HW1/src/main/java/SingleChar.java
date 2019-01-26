@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is a class that represents a single digit. There are 16 ObjectInstance stored in class, each
+ * representing a segment. It figures out which segments to draw when passed in numbers.
+ */
 public class SingleChar {
 
   private static float HEIGHT = 4;
@@ -52,100 +56,110 @@ public class SingleChar {
 
   /**
    * Creates the 16 segments by figuring out the origin of each segment.
+   * segment are allocated in following order:
+   * +--8---+--10--+
+   * | \    |    / |
+   * 7  15  9  12 11
+   * |    \ | /    |
+   * +--6---+--0---+
+   * |    / | \    |
+   * 5  14  3  13  1
+   * | /    |    \ |
+   * +--3---+--2---+
    */
   private void initObjects() {
     float blank = Math.max(1, HEIGHT / 100);
 
-    float seg1OriX = px + blank;
-    float seg1OriY = py;
+    float seg0OriX = px + blank;
+    float seg0OriY = py;
     objects[0] = genSingleSegObj(
-        genSingleSegPos(seg1OriX, seg1OriY, false),
+        genSingleSegPos(seg0OriX, seg0OriY, false),
+        namePrefix + ".Seg0");
+
+    float seg1OriX = seg0OriX + LENGTH_HORIZONTAL + blank;
+    float seg1OriY = seg0OriY - blank;
+    objects[1] = genSingleSegObj(
+        genSingleSegPos(seg1OriX, seg1OriY, true),
         namePrefix + ".Seg1");
 
-    float seg2OriX = seg1OriX + LENGTH_HORIZONTAL + blank;
-    float seg2OriY = seg1OriY - blank;
-    objects[1] = genSingleSegObj(
-        genSingleSegPos(seg2OriX, seg2OriY, true),
+    float seg2OriX = seg0OriX;
+    float seg2OriY = seg0OriY - 2 * blank - LENGTH_VERTICAL;
+    objects[2] = genSingleSegObj(
+        genSingleSegPos(seg2OriX, seg2OriY, false),
         namePrefix + ".Seg2");
 
-    float seg3OriX = seg1OriX;
-    float seg3OriY = seg1OriY - 2 * blank - LENGTH_VERTICAL;
-    objects[2] = genSingleSegObj(
-        genSingleSegPos(seg3OriX, seg3OriY, false),
+    float seg3OriX = px;
+    float seg3OriY = py - blank;
+    objects[3] = genSingleSegObj(genSingleSegPos(seg3OriX, seg3OriY, true),
         namePrefix + ".Seg3");
 
-    float seg4OriX = px;
-    float seg4OriY = py - blank;
-    objects[3] = genSingleSegObj(genSingleSegPos(seg4OriX, seg4OriY, true),
+    float seg4OriX = seg2OriX - 2 * blank - LENGTH_HORIZONTAL;
+    float seg4OriY = seg2OriY;
+    objects[4] = genSingleSegObj(genSingleSegPos(seg4OriX, seg4OriY, false),
         namePrefix + ".Seg4");
 
-    float seg5OriX = seg3OriX - 2 * blank - LENGTH_HORIZONTAL;
+    float seg5OriX = seg4OriX - blank;
     float seg5OriY = seg3OriY;
-    objects[4] = genSingleSegObj(genSingleSegPos(seg5OriX, seg5OriY, false),
+    objects[5] = genSingleSegObj(genSingleSegPos(seg5OriX, seg5OriY, true),
         namePrefix + ".Seg5");
 
-    float seg6OriX = seg5OriX - blank;
-    float seg6OriY = seg4OriY;
-    objects[5] = genSingleSegObj(genSingleSegPos(seg6OriX, seg6OriY, true),
+    float seg6OriX = seg4OriX;
+    float seg6OriY = py;
+    objects[6] = genSingleSegObj(genSingleSegPos(seg6OriX, seg6OriY, false),
         namePrefix + ".Seg6");
 
     float seg7OriX = seg5OriX;
-    float seg7OriY = py;
-    objects[6] = genSingleSegObj(genSingleSegPos(seg7OriX, seg7OriY, false),
+    float seg7OriY = seg6OriY + blank + LENGTH_VERTICAL;
+    objects[7] = genSingleSegObj(genSingleSegPos(seg7OriX, seg7OriY, true),
         namePrefix + ".Seg7");
 
     float seg8OriX = seg6OriX;
-    float seg8OriY = seg7OriY + blank + LENGTH_VERTICAL;
-    objects[7] = genSingleSegObj(genSingleSegPos(seg8OriX, seg8OriY, true),
+    float seg8OriY = seg7OriY + blank;
+    objects[8] = genSingleSegObj(genSingleSegPos(seg8OriX, seg8OriY, false),
         namePrefix + ".Seg8");
 
-    float seg9OriX = seg7OriX;
-    float seg9OriY = seg8OriY + blank;
-    objects[8] = genSingleSegObj(genSingleSegPos(seg9OriX, seg9OriY, false),
+    float seg9OriX = px;
+    float seg9OriY = py + blank + LENGTH_VERTICAL;
+    objects[9] = genSingleSegObj(genSingleSegPos(seg9OriX, seg9OriY, true),
         namePrefix + ".Seg9");
 
-    float seg10OriX = px;
-    float seg10OriY = py + blank + LENGTH_VERTICAL;
-    objects[9] = genSingleSegObj(genSingleSegPos(seg10OriX, seg10OriY, true),
+    float seg10OriX = seg9OriX;
+    float seg10OriY = seg9OriY + blank;
+    objects[10] = genSingleSegObj(genSingleSegPos(seg10OriX, seg10OriY, false),
         namePrefix + ".Seg10");
 
     float seg11OriX = seg1OriX;
-    float seg11OriY = seg10OriY + blank;
-    objects[10] = genSingleSegObj(genSingleSegPos(seg11OriX, seg11OriY, false),
+    float seg11OriY = seg9OriY;
+    objects[11] = genSingleSegObj(genSingleSegPos(seg11OriX, seg11OriY, true),
         namePrefix + ".Seg11");
 
-    float seg12OriX = seg2OriX;
-    float seg12OriY = seg10OriY;
-    objects[11] = genSingleSegObj(genSingleSegPos(seg12OriX, seg12OriY, true),
+    float seg12OriX1 = seg0OriX + HALF_HEIGHT;
+    float seg12OriY1 = seg0OriY + HALF_HEIGHT + blank;
+    float seg12OriX2 = seg11OriX - HALF_HEIGHT - blank;
+    float seg12OriY2 = seg11OriY - HALF_HEIGHT;
+    objects[12] = genSingleSegObj(genSingleSegPos(seg12OriX1, seg12OriY1, seg12OriX2, seg12OriY2),
         namePrefix + ".Seg12");
 
-    float seg13OriX1 = seg1OriX + HALF_HEIGHT;
-    float seg13OriY1 = seg1OriY + HALF_HEIGHT + blank;
-    float seg13OriX2 = seg12OriX - HALF_HEIGHT - blank;
-    float seg13OriY2 = seg12OriY - HALF_HEIGHT;
-    objects[12] = genSingleSegObj(genSingleSegPos(seg13OriX1, seg13OriY1, seg13OriX2, seg13OriY2),
+    float seg13OriX1 = seg0OriX + HALF_HEIGHT;
+    float seg13OriY1 = seg0OriY - HALF_HEIGHT - blank;
+    float seg13OriX2 = seg2OriX + LENGTH_HORIZONTAL - HALF_HEIGHT;
+    float seg13OriY2 = seg2OriY + HALF_HEIGHT + blank;
+    objects[13] = genSingleSegObj(genSingleSegPos(seg13OriX1, seg13OriY1, seg13OriX2, seg13OriY2),
         namePrefix + ".Seg13");
 
-    float seg14OriX1 = seg1OriX + HALF_HEIGHT;
-    float seg14OriY1 = seg1OriY - HALF_HEIGHT - blank;
-    float seg14OriX2 = seg3OriX + LENGTH_HORIZONTAL - HALF_HEIGHT;
-    float seg14OriY2 = seg3OriY + HALF_HEIGHT + blank;
-    objects[13] = genSingleSegObj(genSingleSegPos(seg14OriX1, seg14OriY1, seg14OriX2, seg14OriY2),
+    float seg14OriX1 = seg4OriX + HALF_HEIGHT;
+    float seg14OriY1 = seg4OriY + HALF_HEIGHT + blank;
+    float seg14OriX2 = seg3OriX - HALF_HEIGHT - blank;
+    float seg14OriY2 = seg3OriY - HALF_HEIGHT;
+    objects[14] = genSingleSegObj(genSingleSegPos(seg14OriX1, seg14OriY1, seg14OriX2, seg14OriY2),
         namePrefix + ".Seg14");
 
-    float seg15OriX1 = seg5OriX + HALF_HEIGHT;
-    float seg15OriY1 = seg5OriY + HALF_HEIGHT + blank;
-    float seg15OriX2 = seg4OriX - HALF_HEIGHT - blank;
-    float seg15OriY2 = seg4OriY - HALF_HEIGHT;
-    objects[14] = genSingleSegObj(genSingleSegPos(seg15OriX1, seg15OriY1, seg15OriX2, seg15OriY2),
+    float seg15OriX1 = seg8OriX + HALF_HEIGHT;
+    float seg15OriY1 = seg8OriY - HALF_HEIGHT - blank;
+    float seg15OriX2 = seg6OriX + LENGTH_HORIZONTAL - HALF_HEIGHT;
+    float seg15OriY2 = seg6OriY + HALF_HEIGHT + blank;
+    objects[15] = genSingleSegObj(genSingleSegPos(seg15OriX1, seg15OriY1, seg15OriX2, seg15OriY2),
         namePrefix + ".Seg15");
-
-    float seg16OriX1 = seg9OriX + HALF_HEIGHT;
-    float seg16OriY1 = seg9OriY - HALF_HEIGHT - blank;
-    float seg16OriX2 = seg7OriX + LENGTH_HORIZONTAL - HALF_HEIGHT;
-    float seg16OriY2 = seg7OriY + HALF_HEIGHT + blank;
-    objects[15] = genSingleSegObj(genSingleSegPos(seg16OriX1, seg16OriY1, seg16OriX2, seg16OriY2),
-        namePrefix + ".Seg16");
 
   }
 

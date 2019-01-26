@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This is a class that represents a single digit. There is 7 ObjectInstance stored each
+ * This is a class that represents a single digit. There are 7 ObjectInstance stored in class, each
  * representing a segment. It figures out which segments to draw when passed in numbers.
  */
 class SingleDigit {
