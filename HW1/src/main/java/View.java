@@ -47,13 +47,11 @@ public class View {
         shaderLocations = program.getAllShaderVariables(gl);
 
         // Create all the digits data
-        int complement = 0; // This int help create intervals between numbers
         int starting = 55;
         int interval = 50;
         for (int i = 0; i < 6; ++i) {
             digits[i] = new SingleDigit(starting + interval * i + (i / 2)*(interval), 283,
                     gl, program, shaderLocations, "Digit" + i);
-            complement++;
         }
         // Create all the dots.
         dots[0] = new TwoDots(175, 250, 30, gl, program, shaderLocations, "DotsGroup1");
