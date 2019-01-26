@@ -10,7 +10,6 @@ import java.nio.FloatBuffer;
 
 
 /**
- * Created by ashesh on 9/18/2015.
  * <p>
  * The View class is the "controller" of all our OpenGL stuff. It cleanly
  * encapsulates all our OpenGL functionality from the rest of Java GUI, managed
@@ -32,7 +31,6 @@ public class View {
     public View() {
         proj = new Matrix4f();
         proj.identity();
-
         digits = new SingleDigit[6];
         dots = new TwoDots[2];
         shaderLocations = null;
@@ -42,18 +40,22 @@ public class View {
     public void init(GLAutoDrawable gla) throws Exception {
         GL3 gl = (GL3) gla.getGL().getGL3();
 
-
         //compile and make our shader program. Look at the ShaderProgram class for details on how this is done
         program = new ShaderProgram();
         program.createProgram(gl, "shaders/default.vert", "shaders/default.frag");
 
         shaderLocations = program.getAllShaderVariables(gl);
-        int complement = 0;
+
+        // Create all the digits data
+        int complement = 0; // This int help create intervals between numbers
+        int starting = 55;
+        int interval = 50;
         for (int i = 0; i < 6; ++i) {
-            digits[i] = new SingleDigit(55 + 50 * i + (i / 2)*(50), 283,
+            digits[i] = new SingleDigit(starting + interval * i + (i / 2)*(interval), 283,
                     gl, program, shaderLocations, "Digit" + i);
             complement++;
         }
+        // Create all the dots.
         dots[0] = new TwoDots(175, 250, 30, gl, program, shaderLocations, "DotsGroup1");
         dots[1] = new TwoDots(325, 250, 30, gl, program, shaderLocations, "DotsGroup1");
 
@@ -61,27 +63,15 @@ public class View {
 
 
     public void draw(GLAutoDrawable gla) {
-        //System.out.println("drawing");
-//        try {
-//            this.init(gla);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-//       PolygonMesh<?> newMesh = obj.getMesh();
-//        newMesh.setPrimitives(time.getIndices());
         GL3 gl = gla.getGL().getGL3();
 
-//        obj = new ObjectInstance(gl, program, shaderLocations, new HashMap<String,String>(), newMesh, "triangles");
         FloatBuffer fb16 = Buffers.newDirectFloatBuffer(16);
         FloatBuffer fb4 = Buffers.newDirectFloatBuffer(4);
 
+        // set color to green
         color = new Vector4f(0, 1, 0, 1);
 
-        //set the background color to be white
- /*   gl.glClearColor((float)Math.random(),
-            (float)Math.random(),
-            (float)Math.random(), 1);*/
+        //set the background color to be black
         gl.glClearColor(0, 0, 0, 0);
         //clear the background
         gl.glClear(gl.GL_COLOR_BUFFER_BIT);
@@ -98,8 +88,7 @@ public class View {
                 shaderLocations.getLocation("vColor")
                 , 1, color.get(fb4));
 
-        //gl.glPolygonMode(GL.GL_FRONT_AND_BACK,GL3.GL_LINE);
-        //draw the object
+        //draw the objects
         digits[0].draw(gla, Utility.getHour() / 10);
         digits[1].draw(gla, Utility.getHour() % 10);
         digits[2].draw(gla, Utility.getMin() / 10);
@@ -109,7 +98,6 @@ public class View {
         for (TwoDots dot : dots) {
             dot.draw(gla);
         }
-
 
         gl.glFlush();
         //disable the program

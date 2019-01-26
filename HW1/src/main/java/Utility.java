@@ -28,14 +28,17 @@ public class Utility {
         return vertexData;
     }
 
+    // Get hour of time
     static int getHour() {
         return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     }
 
+    // Get minute of time
     static int getMin() {
         return Calendar.getInstance().get(Calendar.MINUTE);
     }
 
+    // Get second of time
     static int getSec() {
         return Calendar.getInstance().get(Calendar.SECOND);
     }
