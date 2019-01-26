@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 class TwoDots {
-    private static float RADIUS = 1;
+    private static float RADIUS = 2;
     private static int NUM_OF_TRI_IN_CIRCLE = 32;
     private ObjectInstance[] objects;
     private GL3 gl;

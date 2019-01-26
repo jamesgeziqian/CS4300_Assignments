@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 class SingleDigit {
-    private static float HEIGHT = 2;
-    private static int LENGTH_DIV_HEIGHT = 5;
+    private static float HEIGHT = 4;
+    private static int LENGTH_DIV_HEIGHT = 8;
     private static float LENGTH = HEIGHT * LENGTH_DIV_HEIGHT;
     private String namePrefix;
     private ObjectInstance[] objects;

@@ -53,12 +53,12 @@ public class View {
         shaderLocations = program.getAllShaderVariables(gl);
         int complement = 0;
         for (int i = 0; i < 6; ++i) {
-            digits[i] = new SingleDigit(50 + 40 * i + (i / 2)*(20), 250f,
+            digits[i] = new SingleDigit(55 + 50 * i + (i / 2)*(50), 283,
                     gl, program, shaderLocations, "Digit" + i);
             complement++;
         }
-        dots[0] = new TwoDots(170, 200, 10, gl, program, shaderLocations, "DotsGroup1");
-        dots[1] = new TwoDots(260, 200, 10, gl, program, shaderLocations, "DotsGroup1");
+        dots[0] = new TwoDots(175, 250, 30, gl, program, shaderLocations, "DotsGroup1");
+        dots[1] = new TwoDots(325, 250, 30, gl, program, shaderLocations, "DotsGroup1");
 
     }
 
