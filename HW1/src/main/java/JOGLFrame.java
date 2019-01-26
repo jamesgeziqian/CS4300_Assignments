@@ -15,6 +15,7 @@ import java.awt.event.WindowListener;
  * Created by ashesh on 9/18/2015.
  */
 public class JOGLFrame extends JFrame {
+
   private View view;
 
   public JOGLFrame(String title) {
@@ -34,11 +35,13 @@ public class JOGLFrame extends JFrame {
 
     canvas.addGLEventListener(new GLEventListener() {
       @Override
-      public void init(GLAutoDrawable glAutoDrawable) { //called the first time this canvas is created. Do your initialization here
+      public void init(
+          GLAutoDrawable glAutoDrawable) { //called the first time this canvas is created. Do your initialization here
         try {
           view.init(glAutoDrawable);
         } catch (Exception e) {
-          JOptionPane.showMessageDialog(JOGLFrame.this, e.getMessage(), "Error while loading", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(JOGLFrame.this, e.getMessage(), "Error while loading",
+              JOptionPane.ERROR_MESSAGE);
         }
       }
 
@@ -48,12 +51,14 @@ public class JOGLFrame extends JFrame {
       }
 
       @Override
-      public void display(GLAutoDrawable glAutoDrawable) { //called every time this window must be redrawn
+      public void display(
+          GLAutoDrawable glAutoDrawable) { //called every time this window must be redrawn
         view.draw(glAutoDrawable);
       }
 
       @Override
-      public void reshape(GLAutoDrawable glAutoDrawable, int x, int y, int width, int height) { //called every time this canvas is resized
+      public void reshape(GLAutoDrawable glAutoDrawable, int x, int y, int width,
+          int height) { //called every time this canvas is resized
         view.reshape(glAutoDrawable, x, y, width, height);
       }
     });
