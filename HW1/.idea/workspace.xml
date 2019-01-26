@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="210535df-51ce-4d98-96cf-bebb8e19766e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SingleChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SingleChar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SingleDigit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SingleDigit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TwoDots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TwoDots.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SingleChar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SingleChar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TwoDots.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TwoDots.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,8 +48,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/SingleChar.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="435">
-                  <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
+                <state relative-caret-position="3">
+                  <caret line="300" column="33" lean-forward="true" selection-start-line="300" selection-start-column="33" selection-end-line="300" selection-end-column="33" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -160,7 +155,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-1090" />
     <option name="y" value="-44" />
     <option name="width" value="3866" />
@@ -227,7 +222,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548532270642" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548532334188" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
@@ -270,12 +265,20 @@
       <updated>1548482447945</updated>
       <workItem from="1548482449185" duration="1957000" />
       <workItem from="1548520603645" duration="10214000" />
-      <workItem from="1548531011309" duration="1259000" />
+      <workItem from="1548531011309" duration="1322000" />
     </task>
+    <task id="LOCAL-00001" summary="UPDATE: comment">
+      <created>1548532298997</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1548532298997</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13430000" />
+    <option name="totallyTimeSpent" value="13493000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1933" height="1053" extended-state="6" />
@@ -316,6 +319,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="UPDATE: comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="UPDATE: comment" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/TimeConvert.java" />
@@ -390,8 +397,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SingleChar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
+        <state relative-caret-position="3">
+          <caret line="300" column="33" lean-forward="true" selection-start-line="300" selection-start-column="33" selection-end-line="300" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
