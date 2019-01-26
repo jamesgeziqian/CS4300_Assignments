@@ -65,7 +65,7 @@ class TwoDots {
                             0, 1f));
         }
         positions.add(new Vector4f(x + RADIUS, y, 0, 1f));
-        List<IVertexData> vertexData = parseToIVertexData.doIt(positions);
+        List<IVertexData> vertexData = Utility.parseToIVertexData(positions);
         PolygonMesh<IVertexData> mesh = new PolygonMesh<>();
         mesh.setVertexData(vertexData);
         mesh.setPrimitives(getIndicesSingleDot());

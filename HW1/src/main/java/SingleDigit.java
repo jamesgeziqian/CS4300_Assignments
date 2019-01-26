@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is a class that represents a single digit. There is 7 ObjectInstance stored each representing a segment.
+ * It figures out which segments to draw when passed in numbers.
+ */
 class SingleDigit {
     private static float HEIGHT = 4;
     private static int LENGTH_DIV_HEIGHT = 8;
@@ -20,7 +24,15 @@ class SingleDigit {
     private util.ShaderLocationsVault shaderLocations;
     private float px, py;
 
-
+    /**
+     * Constructor needs to know information on how to create an object and the left top point of a digit.
+     * @param x This is the x coordinate of the left top point.
+     * @param y This is the y coordinate of the right top point.
+     * @param gl Passed in an GL3 object help creates the ObjectInstance.
+     * @param program Shader program that helps set up the ObjectInstance.
+     * @param shaderLocations Shader location that helps set up the ObjectInstance.
+     * @param namePrefix A string that helps name the objects.
+     */
     SingleDigit(float x, float y, GL3 gl,
                 util.ShaderProgram program,
                 util.ShaderLocationsVault shaderLocations,
@@ -32,9 +44,13 @@ class SingleDigit {
         objects = new ObjectInstance[7];
         px = x;
         py = y;
+        // creates ObjectInstance that make up the 7 segments.
         initObjects();
     }
 
+    /**
+     * Creates the 7 segments by figuring out the origin of each segment.
+     */
     private void initObjects() {
         float blank = Math.max(1, HEIGHT / 100);
 
@@ -78,8 +94,15 @@ class SingleDigit {
 
     }
 
+    /**
+     * Create a single segment ObjectInstance. Set up a PolygonMesh using position data.
+     * Then set up the ObjectInstance using the mesh and given string as name.
+     * @param positions Data of positions
+     * @param str Data of naming the object
+     * @return A single segment ObjectInstance
+     */
     private ObjectInstance genSingleSegObj(List<Vector4f> positions, String str) {
-        List<IVertexData> vertexData = parseToIVertexData.doIt(positions);
+        List<IVertexData> vertexData = Utility.parseToIVertexData(positions);
         PolygonMesh<IVertexData> mesh = new PolygonMesh<>();
         mesh.setVertexData(vertexData);
         mesh.setPrimitives(getIndicesSingleSeg());
@@ -90,7 +113,12 @@ class SingleDigit {
         return new ObjectInstance(gl, program, shaderLocations, shaderToVertexAttribute, mesh, str);
     }
 
+    /**
+     * Hard code the indices to a List of Integer. Each segment shares the same indices data.
+     * @return Indices for a single segment.
+     */
     private List<Integer> getIndicesSingleSeg() {
+        // Draw the 4 triangles.
         ArrayList<Integer> result = new ArrayList<>();
         result.add(0);
         result.add(1);
@@ -110,6 +138,13 @@ class SingleDigit {
         return result;
     }
 
+    /**
+     * This is the creation of positioning data of a single segment.
+     * @param oriX  The x coordinate of the origin.
+     * @param oriY  The y coordinate of the origin.
+     * @param vertical  Whether it is a vertical segment or a horizontal segment.
+     * @return Data of position of a single segment.
+     */
     private ArrayList<Vector4f> genSingleSegPos(float oriX, float oriY, boolean vertical) {
         float halfHeight = HEIGHT / 2;
         float longPartialLength = LENGTH - halfHeight;
@@ -132,7 +167,13 @@ class SingleDigit {
         return result;
     }
 
+    /**
+     * Draw the numbers out.
+     * @param gla passed in GLAutoDrawable object to help draw a number.
+     * @param num Which number to draw.
+     */
     void draw(GLAutoDrawable gla, int num) {
+        // Create data determining which segments to display.
         HashMap<Integer, int[]> map = new HashMap<>();
         map.put(0, new int[]{0, 1, 2, 3, 4, 5});
         map.put(1, new int[]{1, 2});
@@ -149,6 +190,10 @@ class SingleDigit {
         }
     }
 
+    /**
+     * Clean up all the ObjectInstance.
+     * @param gla GLAutoDrawable objects that passed to all objects that helps cleanup.
+     */
     void cleanup(GLAutoDrawable gla) {
         for (ObjectInstance obj : objects) {
             obj.cleanup(gla);

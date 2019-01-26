@@ -55,7 +55,6 @@ public class JOGLFrame extends JFrame {
       @Override
       public void reshape(GLAutoDrawable glAutoDrawable, int x, int y, int width, int height) { //called every time this canvas is resized
         view.reshape(glAutoDrawable, x, y, width, height);
-      //  repaint(); //refresh window
       }
     });
 

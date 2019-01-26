@@ -22,7 +22,6 @@ public class View {
     private SingleDigit[] digits;
     private TwoDots[] dots;
     private ShaderLocationsVault shaderLocations;
-    private TimeConvert time;
 
 
     private Vector4f color;
@@ -38,8 +37,6 @@ public class View {
         dots = new TwoDots[2];
         shaderLocations = null;
         WINDOW_WIDTH = WINDOW_HEIGHT = 0;
-
-        time = TimeConvert.getInstance();
     }
 
     public void init(GLAutoDrawable gla) throws Exception {
@@ -103,12 +100,12 @@ public class View {
 
         //gl.glPolygonMode(GL.GL_FRONT_AND_BACK,GL3.GL_LINE);
         //draw the object
-        digits[0].draw(gla, TimeConvert.getHour() / 10);
-        digits[1].draw(gla, TimeConvert.getHour() % 10);
-        digits[2].draw(gla, TimeConvert.getMin() / 10);
-        digits[3].draw(gla, TimeConvert.getMin() % 10);
-        digits[4].draw(gla, TimeConvert.getSec() / 10);
-        digits[5].draw(gla, TimeConvert.getSec() % 10);
+        digits[0].draw(gla, Utility.getHour() / 10);
+        digits[1].draw(gla, Utility.getHour() % 10);
+        digits[2].draw(gla, Utility.getMin() / 10);
+        digits[3].draw(gla, Utility.getMin() % 10);
+        digits[4].draw(gla, Utility.getSec() / 10);
+        digits[5].draw(gla, Utility.getSec() % 10);
         for (TwoDots dot : dots) {
             dot.draw(gla);
         }
