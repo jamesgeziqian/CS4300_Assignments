@@ -110,10 +110,12 @@ public class View {
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
     gl.glViewport(0, 0, width, height);
-
-    proj = new Matrix4f().ortho2D(0, 500,
-        0, 500 * (float) height / width);
-
+    if(width > height){
+      proj = new Matrix4f().ortho2D(0, 500 * (float) width / height, 0,500);
+    } else {
+      proj = new Matrix4f().ortho2D(0, 500,
+              0, 500 * (float) height / width);
+    }
   }
 
   public void dispose(GLAutoDrawable gla) {
