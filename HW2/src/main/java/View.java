@@ -52,6 +52,7 @@ class View {
   }
 
   private void initObjects(GL3 gl) throws FileNotFoundException {
+    // sun init
     float SUN_RADIUS = 80f;
     float SUN_ROTATION = (float) Math.toRadians(time);
     Matrix4f sunMatrix = new Matrix4f()
@@ -60,6 +61,7 @@ class View {
     starMap.put("sun",
         new Sphere(gl, program, shaderLocations, sunMatrix, "sun", .988f, .831f, .251f));
 
+    // planet1 init
     float P1_RADIUS = 20f;
     float P1_ROTATION = (float) Math.toRadians(time * 3);
     Matrix4f planet1Matrix = new Matrix4f()
@@ -67,6 +69,35 @@ class View {
         .scale(P1_RADIUS, P1_RADIUS, P1_RADIUS);
     starMap.put("planet1",
         new Sphere(gl, program, shaderLocations, planet1Matrix, "planet1", .4f, .8f, 1));
+
+    // planet1 satellite1
+    float P1_S1_RADIUS = 5f;
+    float P1_S1_ROTATION = (float) Math.toRadians(time * 3);
+    Matrix4f planet1Satellite1Matrix = new Matrix4f()
+        .rotate(P1_S1_ROTATION, 0, 1, 0)
+        .scale(P1_S1_RADIUS, P1_S1_RADIUS, P1_S1_RADIUS);
+    starMap.put("planet1Satellite1",
+        new Sphere(gl, program, shaderLocations, planet1Satellite1Matrix, "planet1Satellite1", .5f,
+            .5f, .5f));
+
+    // planet2
+    float P2_RADIUS = 35f;
+    float P2_ROTATION = (float) Math.toRadians(time * 1.3);
+    Matrix4f planet2Matrix = new Matrix4f()
+        .rotate(P2_ROTATION, 0, 1, 0)
+        .scale(P2_RADIUS, P2_RADIUS, P2_RADIUS);
+    starMap.put("planet2",
+        new Sphere(gl, program, shaderLocations, planet2Matrix, "planet2", .757f, .267f, .055f));
+
+    // planet3
+    float P3_RADIUS = 50f;
+    float P3_ROTATION = (float) Math.toRadians(time / 2);
+    Matrix4f planet3Matrix = new Matrix4f()
+        .rotate(P3_ROTATION, 0, 1, 0)
+        .scale(P3_RADIUS, P3_RADIUS, P3_RADIUS);
+    starMap.put("planet3",
+        new Sphere(gl, program, shaderLocations, planet3Matrix, "planet3", .992f, .651f, 0f));
+
 
   }
 
@@ -86,11 +117,8 @@ class View {
 
 
   void draw(GLAutoDrawable gla) {
-    float PLANET1_REV_RADIUS = 100;
     GL3 gl = gla.getGL().getGL3();
 
-    float P1_REV_RAD = 100f;
-    float P1_REV_ANG = (float) Math.toRadians(time * 3);
     //set the background color to be black
     gl.glClearColor(0, 0, 0, 1);
     //clear the background
@@ -108,6 +136,8 @@ class View {
     starMap.get("sun").draw(gla, modelView.peek(), proj);
 
     // planet1 info
+    float P1_REV_RAD = 120;
+    float P1_REV_ANG = (float) Math.toRadians(time * 2);
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(
@@ -115,7 +145,53 @@ class View {
             P1_REV_RAD * (float) Math.sin(P1_REV_ANG),
             0);
     starMap.get("planet1").draw(gla, modelView.peek(), proj);
+
+    // planet1 satellite1 info
+    float P1_S1_REV_RAD = 40;
+    float P1_S1_REV_ANG = (float) Math.toRadians(time * 5);
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .translate(
+            P1_S1_REV_RAD * (float) Math.cos(P1_S1_REV_ANG),
+            P1_S1_REV_RAD * (float) Math.sin(P1_S1_REV_ANG),
+            0);
+    starMap.get("planet1Satellite1").draw(gla, modelView.peek(), proj);
+    // pop planet 1 satellite 1 info
+    modelView.pop();
     // pop planet 1 info
+    modelView.pop();
+
+    // planet2 info
+    float P2_REV_RAD = 220;
+    float P2_REV_ANG = (float) Math.toRadians(time * 1.2);
+    float P2_ORBIT_ANG = (float) Math.PI / 6;
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .rotate(P2_ORBIT_ANG, 0, 1, 0)
+        .translate(
+            P2_REV_RAD * (float) Math.cos(P2_REV_ANG),
+            P2_REV_RAD * (float) Math.sin(P2_REV_ANG),
+            0);
+    starMap.get("planet2").draw(gla, modelView.peek(), proj);
+    // pop planet 2 info
+    modelView.pop();
+
+    // planet3 info
+    float P3_REV_RAD_A = 450;
+    float P3_REV_RAD_B = 400;
+    float P3_REV_ANG = (float) Math.toRadians(time / .75);
+    float P3_REV_EA = (float) Math
+        .sqrt(1 - (P3_REV_RAD_B * P3_REV_RAD_B / P3_REV_RAD_A / P3_REV_RAD_A)) * P3_REV_RAD_A;
+
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .translate(0 - P3_REV_EA, 0, 0)
+        .translate(
+            P3_REV_RAD_A * (float) Math.cos(P3_REV_ANG),
+            P3_REV_RAD_B * (float) Math.sin(P3_REV_ANG),
+            0);
+    starMap.get("planet3").draw(gla, modelView.peek(), proj);
+    // pop planet 3 info
     modelView.pop();
 
     gl.glFlush();
@@ -141,11 +217,11 @@ class View {
 
     if (width > height) {
       proj = new Matrix4f()
-          .ortho(-400f * width / height, 400f * width / height, -400, 400, 0.1f, 10000.0f);
+          .ortho(-1000f * width / height, 1000f * width / height, -1000, 1000, 0.1f, 10000.0f);
 
     } else {
       proj = new Matrix4f()
-          .ortho(-400, 400, -400f * height / width, 400f * height / width, 0.1f, 10000.0f);
+          .ortho(-1000, 1000, -1000f * height / width, 1000f * height / width, 0.1f, 10000.0f);
 
     }
 
