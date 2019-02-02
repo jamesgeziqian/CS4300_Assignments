@@ -1,6 +1,10 @@
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.*;
 
+import com.jogamp.opengl.math.Matrix4;
+import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 import util.*;
 
 import org.joml.Matrix4f;
@@ -16,81 +20,58 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+class View {
 
-/**
- * Created by ashesh on 9/18/2015.
- *
- * The View class is the "controller" of all our OpenGL stuff. It cleanly
- * encapsulates all our OpenGL functionality from the rest of Java GUI, managed
- * by the JOGLFrame class.
- */
-public class View {
-  private int WINDOW_WIDTH,WINDOW_HEIGHT;
-  private Matrix4f proj,modelView;
-  private util.ObjectInstance meshObject;
+  private int WINDOW_WIDTH, WINDOW_HEIGHT;
+  private Matrix4f proj;
+  private Stack<Matrix4f> modelView;
+  private Map<String, Sphere> starMap;
   private util.Material material;
 
-
   private util.ShaderProgram program;
-  int angleOfRotation;
+  private int time;
+  private Timer timer;
   private ShaderLocationsVault shaderLocations;
 
-
-
-
-  public View() {
+  View() {
     proj = new Matrix4f();
     proj.identity();
 
-    modelView = new Matrix4f();
-    modelView.identity();
+    modelView = new Stack<>();
+    modelView.push(new Matrix4f().identity());
 
-    angleOfRotation = 0;
+    timer = new Timer(true);
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        time++;
+      }
+    }, 10, 10);
+    time = 0;
+    starMap = new HashMap<>();
   }
 
-  private void initObjects(GL3 gl) throws FileNotFoundException
-  {
-    util.PolygonMesh tmesh;
+  private void initObjects(GL3 gl) throws FileNotFoundException {
+    float SUN_RADIUS = 80f;
+    float SUN_ROTATION = (float) Math.toRadians(time);
+    Matrix4f sunMatrix = new Matrix4f()
+        .mul(new Matrix4f().rotate(SUN_ROTATION, 0, 1, 0))
+        .scale(SUN_RADIUS, SUN_RADIUS, SUN_RADIUS);
+    starMap.put("sun",
+        new Sphere(gl, program, shaderLocations, sunMatrix, "sun", .988f, .831f, .251f));
 
-    InputStream in;
-
-    in = new FileInputStream("models/sphere.obj");
-
-    tmesh = util.ObjImporter.importFile(new VertexAttribProducer(),in,true);
-
-    Map<String, String> shaderToVertexAttribute = new HashMap<String, String>();
-
-    //currently there is only one per-vertex attribute: position
-    shaderToVertexAttribute.put("vPosition", "position");
-
-
-    meshObject = new util.ObjectInstance(gl,
-            program,
-            shaderLocations,
-            shaderToVertexAttribute,
-            tmesh,new
-            String(""));
-
-    Vector4f min = tmesh.getMinimumBounds();
-    Vector4f max = tmesh.getMaximumBounds();
-
-
-    util.Material mat =  new util.Material();
-
-    mat.setAmbient(1,1,1);
-    mat.setDiffuse(1,1,1);
-    mat.setSpecular(1,1,1);
-
-    material = mat;
-
-
-
+    float P1_RADIUS = 20f;
+    float P1_ROTATION = (float) Math.toRadians(time * 3);
+    Matrix4f planet1Matrix = new Matrix4f()
+        .rotate(P1_ROTATION, 0, 1, 0)
+        .scale(P1_RADIUS, P1_RADIUS, P1_RADIUS);
+    starMap.put("planet1",
+        new Sphere(gl, program, shaderLocations, planet1Matrix, "planet1", .4f, .8f, 1));
 
   }
 
-  public void init(GLAutoDrawable gla) throws Exception {
+  void init(GLAutoDrawable gla) throws Exception {
     GL3 gl = (GL3) gla.getGL().getGL3();
-
 
     //compile and make our shader program. Look at the ShaderProgram class for details on how this is done
     program = new ShaderProgram();
@@ -104,13 +85,12 @@ public class View {
   }
 
 
-  public void draw(GLAutoDrawable gla) {
+  void draw(GLAutoDrawable gla) {
+    float PLANET1_REV_RADIUS = 100;
     GL3 gl = gla.getGL().getGL3();
-    FloatBuffer fb16 = Buffers.newDirectFloatBuffer(16);
-    FloatBuffer fb4 = Buffers.newDirectFloatBuffer(4);
 
-    angleOfRotation = (angleOfRotation+1)%360;
-
+    float P1_REV_RAD = 100f;
+    float P1_REV_ANG = (float) Math.toRadians(time * 3);
     //set the background color to be black
     gl.glClearColor(0, 0, 0, 1);
     //clear the background
@@ -119,54 +99,61 @@ public class View {
     //enable the shader program
     program.enable(gl);
 
-    modelView = new Matrix4f().lookAt(new Vector3f(0,200,200),new Vector3f(0,
-            0,0),new Vector3f(0,1,0));
-    modelView = modelView.mul(new Matrix4f().scale(200,200,200))
-            .mul(new Matrix4f().rotate((float)Math.toRadians(angleOfRotation),0,1,0));
+    // look at info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .lookAt(new Vector3f(0, 500, 500), new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
 
-    //pass the projection matrix to the shader
-    gl.glUniformMatrix4fv(
-            shaderLocations.getLocation("projection"),
-            1, false, proj.get(fb16));
+    // draw sun
+    starMap.get("sun").draw(gla, modelView.peek(), proj);
 
-    //pass the modelview matrix to the shader
-    gl.glUniformMatrix4fv(
-            shaderLocations.getLocation("modelview"),
-            1, false, modelView.get(fb16));
-
-    //send the color of the triangle
-    gl.glUniform4fv(
-            shaderLocations.getLocation("vColor")
-            , 1, material.getAmbient().get(fb4));
-
-    gl.glPolygonMode(GL.GL_FRONT_AND_BACK,GL3.GL_LINE); //OUTLINES
-
-    //draw the object
-    meshObject.draw(gla);
+    // planet1 info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .translate(
+            P1_REV_RAD * (float) Math.cos(P1_REV_ANG),
+            P1_REV_RAD * (float) Math.sin(P1_REV_ANG),
+            0);
+    starMap.get("planet1").draw(gla, modelView.peek(), proj);
+    // pop planet 1 info
+    modelView.pop();
 
     gl.glFlush();
     //disable the program
     program.disable(gl);
-    gl.glPolygonMode(GL.GL_FRONT_AND_BACK,GL3.GL_FILL); //BACK TO FILL
+    gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL3.GL_FILL); //BACK TO FILL
+
+    // pop look at info
+    modelView.pop();
   }
 
   //this method is called from the JOGLFrame class, everytime the window resizes
-  public void reshape(GLAutoDrawable gla, int x, int y, int width, int height) {
+  void reshape(GLAutoDrawable gla, int x, int y, int width, int height) {
     GL gl = gla.getGL();
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
     gl.glViewport(0, 0, width, height);
 
-    proj = new Matrix4f().perspective((float)Math.toRadians(60.0f),
-            (float) width/height,
-            0.1f,
-            10000.0f);
+    proj = new Matrix4f().perspective((float) Math.toRadians(60.0f),
+        (float) width / height,
+        0.1f,
+        10000.0f);
 
-   proj = new Matrix4f().ortho(-400,400,-400,400,0.1f,10000.0f);
+    if (width > height) {
+      proj = new Matrix4f()
+          .ortho(-400f * width / height, 400f * width / height, -400, 400, 0.1f, 10000.0f);
+
+    } else {
+      proj = new Matrix4f()
+          .ortho(-400, 400, -400f * height / width, 400f * height / width, 0.1f, 10000.0f);
+
+    }
 
   }
 
-  public void dispose(GLAutoDrawable gla) {
-    meshObject.cleanup(gla);
+  void dispose(GLAutoDrawable gla) {
+    for (Sphere star : starMap.values()) {
+      star.cleanup(gla);
+    }
   }
 }
