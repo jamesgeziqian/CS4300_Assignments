@@ -25,11 +25,11 @@ class View {
   private int WINDOW_WIDTH, WINDOW_HEIGHT;
   private Matrix4f proj;
   private Stack<Matrix4f> modelView;
-  private Map<String, Sphere> starMap;
+  private Map<String, ISimpleObjectInstance> starMap;
   private util.Material material;
 
   private util.ShaderProgram program;
-  private int time;
+  private float time;
   private Timer timer;
   private ShaderLocationsVault shaderLocations;
 
@@ -97,6 +97,35 @@ class View {
         .scale(P3_RADIUS, P3_RADIUS, P3_RADIUS);
     starMap.put("planet3",
         new Sphere(gl, program, shaderLocations, planet3Matrix, "planet3", .992f, .651f, 0f));
+
+    // planet4
+    float P4_RADIUS = 60f;
+    float P4_ROTATION = (float) Math.toRadians(time / 6);
+    Matrix4f planet4Matrix = new Matrix4f()
+        .rotate(P4_ROTATION, 0, 1, 0)
+        .scale(P4_RADIUS, P4_RADIUS, P4_RADIUS);
+    starMap.put("planet4",
+        new Sphere(gl, program, shaderLocations, planet4Matrix, "planet4", 0f, .773f, .5f));
+
+    // planet4 satellite1
+    float P4_S1_RADIUS = 10f;
+    float P4_S1_ROTATION = (float) Math.toRadians(time * 5);
+    Matrix4f planet4Satellite1Matrix = new Matrix4f()
+        .rotate(P4_S1_ROTATION, 0, 1, 0)
+        .scale(P4_S1_RADIUS, P4_S1_RADIUS, P4_S1_RADIUS);
+    starMap.put("planet4Satellite1",
+        new Sphere(gl, program, shaderLocations, planet4Satellite1Matrix, "planet4Satellite1", 0,
+            0, 1));
+
+    // planet4 satellite1
+    float P4_S2_RADIUS = 15f;
+    float P4_S2_ROTATION = (float) Math.toRadians(time * 1.5);
+    Matrix4f planet4Satellite2Matrix = new Matrix4f()
+        .rotate(P4_S2_ROTATION, 0, 1, 0)
+        .scale(P4_S2_RADIUS, P4_S2_RADIUS, P4_S2_RADIUS);
+    starMap.put("planet4Satellite2",
+        new Sphere(gl, program, shaderLocations, planet4Satellite2Matrix, "planet4Satellite2", 1,
+            .753f, 0.796f));
 
 
   }
@@ -179,10 +208,9 @@ class View {
     // planet3 info
     float P3_REV_RAD_A = 450;
     float P3_REV_RAD_B = 400;
-    float P3_REV_ANG = (float) Math.toRadians(time / .75);
+    float P3_REV_ANG = (float) Math.toRadians(time / 2);
     float P3_REV_EA = (float) Math
         .sqrt(1 - (P3_REV_RAD_B * P3_REV_RAD_B / P3_REV_RAD_A / P3_REV_RAD_A)) * P3_REV_RAD_A;
-
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(0 - P3_REV_EA, 0, 0)
@@ -192,6 +220,42 @@ class View {
             0);
     starMap.get("planet3").draw(gla, modelView.peek(), proj);
     // pop planet 3 info
+    modelView.pop();
+
+    // planet4 info
+    float P4_REV_RAD = 900;
+    float P4_REV_ANG = (float) Math.toRadians(time * .2);
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .translate(
+            P4_REV_RAD * (float) Math.cos(P4_REV_ANG),
+            P4_REV_RAD * (float) Math.sin(P4_REV_ANG),
+            0);
+    starMap.get("planet4").draw(gla, modelView.peek(), proj);
+    // planet4 satellite1 info
+    float P4_S1_REV_RAD = 50;
+    float P4_S1_REV_ANG = (float) Math.toRadians(time * 6);
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .translate(
+            P4_S1_REV_RAD * (float) Math.cos(P4_S1_REV_ANG),
+            P4_S1_REV_RAD * (float) Math.sin(P4_S1_REV_ANG),
+            0);
+    starMap.get("planet4Satellite1").draw(gla, modelView.peek(), proj);
+    // pop planet 1 satellite 1 info
+    modelView.pop(); // planet1 satellite1 info
+    float P4_S2_REV_RAD = 150;
+    float P4_S2_REV_ANG = (float) Math.toRadians(time / 1.5);
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .translate(
+            P4_S2_REV_RAD * (float) Math.cos(P4_S2_REV_ANG),
+            P4_S2_REV_RAD * (float) Math.sin(P4_S2_REV_ANG),
+            0);
+    starMap.get("planet4Satellite2").draw(gla, modelView.peek(), proj);
+    // pop planet 4 satellite 2 info
+    modelView.pop();
+    // pop planet 4 info
     modelView.pop();
 
     gl.glFlush();
@@ -228,8 +292,8 @@ class View {
   }
 
   void dispose(GLAutoDrawable gla) {
-    for (Sphere star : starMap.values()) {
-      star.cleanup(gla);
+    for (ISimpleObjectInstance obj : starMap.values()) {
+      obj.cleanup(gla);
     }
   }
 }
