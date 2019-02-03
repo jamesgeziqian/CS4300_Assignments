@@ -71,7 +71,7 @@ class View {
         new Sphere(gl, program, shaderLocations, planet1Matrix, "planet1", .4f, .8f, 1));
 
     // planet1 satellite1
-    float P1_S1_RADIUS = 5f;
+    float P1_S1_RADIUS = 15f;
     float P1_S1_ROTATION = (float) Math.toRadians(time * 3);
     Matrix4f planet1Satellite1Matrix = new Matrix4f()
         .rotate(P1_S1_ROTATION, 0, 1, 0)
@@ -127,7 +127,8 @@ class View {
         new Sphere(gl, program, shaderLocations, planet4Satellite2Matrix, "planet4Satellite2", 1,
             .753f, 0.796f));
 
-
+    starMap.put("orbit", new HollowCircle(gl, program, shaderLocations, "orbit", 1, 1, 1));
+    starMap.put("box", new Box(gl, program, shaderLocations, "box", .7f, .7f, .7f));
   }
 
   void init(GLAutoDrawable gla) throws Exception {
@@ -159,14 +160,23 @@ class View {
     // look at info
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
-        .lookAt(new Vector3f(0, 500, 500), new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
+        .lookAt(new Vector3f(0, 250, 0), new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
 
+    // draw box
+    starMap.get("box").draw(gla, modelView.peek(), proj);
     // draw sun
     starMap.get("sun").draw(gla, modelView.peek(), proj);
 
     // planet1 info
     float P1_REV_RAD = 120;
     float P1_REV_ANG = (float) Math.toRadians(time * 2);
+    // orbit info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek().scale(P1_REV_RAD, P1_REV_RAD, 1);
+    starMap.get("orbit").draw(gla, modelView.peek(), proj);
+    // pop orbit info
+    modelView.pop();
+    // planet1
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(
@@ -174,10 +184,15 @@ class View {
             P1_REV_RAD * (float) Math.sin(P1_REV_ANG),
             0);
     starMap.get("planet1").draw(gla, modelView.peek(), proj);
-
     // planet1 satellite1 info
     float P1_S1_REV_RAD = 40;
     float P1_S1_REV_ANG = (float) Math.toRadians(time * 5);
+    // orbit info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek().scale(P1_S1_REV_RAD, P1_S1_REV_RAD, 1);
+    starMap.get("orbit").draw(gla, modelView.peek(), proj);
+    // pop orbit info
+    modelView.pop();
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(
@@ -194,6 +209,15 @@ class View {
     float P2_REV_RAD = 220;
     float P2_REV_ANG = (float) Math.toRadians(time * 1.2);
     float P2_ORBIT_ANG = (float) Math.PI / 6;
+    // orbit info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .rotate(P2_ORBIT_ANG, 0, 1, 0)
+        .scale(P2_REV_RAD, P2_REV_RAD, 1);
+    starMap.get("orbit").draw(gla, modelView.peek(), proj);
+    // pop orbit info
+    modelView.pop();
+    // planet 2
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .rotate(P2_ORBIT_ANG, 0, 1, 0)
@@ -211,6 +235,15 @@ class View {
     float P3_REV_ANG = (float) Math.toRadians(time / 2);
     float P3_REV_EA = (float) Math
         .sqrt(1 - (P3_REV_RAD_B * P3_REV_RAD_B / P3_REV_RAD_A / P3_REV_RAD_A)) * P3_REV_RAD_A;
+    // orbit info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .translate(0 - P3_REV_EA, 0, 0)
+        .scale(P3_REV_RAD_A, P3_REV_RAD_B, 1);
+    starMap.get("orbit").draw(gla, modelView.peek(), proj);
+    // pop orbit info
+    modelView.pop();
+    // planet3
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(0 - P3_REV_EA, 0, 0)
@@ -225,6 +258,15 @@ class View {
     // planet4 info
     float P4_REV_RAD = 900;
     float P4_REV_ANG = (float) Math.toRadians(time * .2);
+    // orbit info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .scale(P4_REV_RAD, P4_REV_RAD, 1);
+    starMap.get("orbit").draw(gla, modelView.peek(), proj);
+    // pop orbit info
+    modelView.pop();
+
+    // planet4
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(
@@ -235,6 +277,14 @@ class View {
     // planet4 satellite1 info
     float P4_S1_REV_RAD = 50;
     float P4_S1_REV_ANG = (float) Math.toRadians(time * 6);
+    // orbit info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .scale(P4_S1_REV_RAD, P4_S1_REV_RAD, 1);
+    starMap.get("orbit").draw(gla, modelView.peek(), proj);
+    // pop orbit info
+    modelView.pop();
+    // planet4 satellite1
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(
@@ -244,8 +294,16 @@ class View {
     starMap.get("planet4Satellite1").draw(gla, modelView.peek(), proj);
     // pop planet 1 satellite 1 info
     modelView.pop(); // planet1 satellite1 info
-    float P4_S2_REV_RAD = 150;
+    float P4_S2_REV_RAD = 90;
     float P4_S2_REV_ANG = (float) Math.toRadians(time / 1.5);
+    // orbit info
+    modelView.push(new Matrix4f(modelView.peek()));
+    modelView.peek()
+        .scale(P4_S2_REV_RAD, P4_S2_REV_RAD, 1);
+    starMap.get("orbit").draw(gla, modelView.peek(), proj);
+    // pop orbit info
+    modelView.pop();
+    // planet4 satellite2
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
         .translate(
@@ -277,15 +335,15 @@ class View {
     proj = new Matrix4f().perspective((float) Math.toRadians(60.0f),
         (float) width / height,
         0.1f,
-        10000.0f);
+        100000.0f);
 
     if (width > height) {
       proj = new Matrix4f()
-          .ortho(-1000f * width / height, 1000f * width / height, -1000, 1000, 0.1f, 10000.0f);
+          .ortho(-1500f * width / height, 1500f * width / height, -1500, 1500, 0.1f, 100000.0f);
 
     } else {
       proj = new Matrix4f()
-          .ortho(-1000, 1000, -1000f * height / width, 1000f * height / width, 0.1f, 10000.0f);
+          .ortho(-1500, 1500, -1500f * height / width, 1500f * height / width, 0.1f, 100000.0f);
 
     }
 

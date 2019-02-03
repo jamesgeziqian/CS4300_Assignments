@@ -1,24 +1,17 @@
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
-import util.IVertexData;
-import util.Material;
-import util.ObjectInstance;
-import util.PolygonMesh;
 import util.ShaderLocationsVault;
 import util.ShaderProgram;
 
-public class HollowCircle extends ASimpleObjectInstance {
+public class Box extends ASimpleObjectInstance {
 
-  HollowCircle(
+  Box(
       GL3 gl,
       ShaderProgram program,
       ShaderLocationsVault shaderLocations,
@@ -29,25 +22,62 @@ public class HollowCircle extends ASimpleObjectInstance {
   }
 
   private void init() {
-    int NUM_SIDE = 360;
-    //set up positions
+    //set up vertex attributes (in this case we have only position)
     List<Vector4f> positions = new ArrayList<Vector4f>();
-    for (int i = 0; i < NUM_SIDE + 1; i++) {
-      double theta = i * Math.PI * 2 / NUM_SIDE;
-      positions.add(new Vector4f((float) Math.cos(theta), (float) Math.sin(theta), 0f, 1f));
-    }
+    float d = 500;
+    float dd = 250;
+    positions.add(new Vector4f(d, -d, -dd, 1f));
+    positions.add(new Vector4f(d, d, -dd, 1f));
+    positions.add(new Vector4f(-d, d, -dd, 1f));
+    positions.add(new Vector4f(-d, -d, -dd, 1f));
+    positions.add(new Vector4f(d, -d, dd, 1f));
+    positions.add(new Vector4f(d, d, dd, 1f));
+    positions.add(new Vector4f(-d, d, dd, 1f));
+    positions.add(new Vector4f(-d, -d, dd, 1f));
 
     // set up indices
     List<Integer> indices = new ArrayList<>();
-    for (int i = 0; i < NUM_SIDE; i++) {
-      indices.add(i);
-      indices.add(i + 1);
-    }
-    // add object to object list
+    indices.add(0);
+    indices.add(1);
+
+    indices.add(1);
+    indices.add(2);
+
+    indices.add(2);
+    indices.add(3);
+
+    indices.add(4);
+    indices.add(1);
+
+    indices.add(4);
+    indices.add(5);
+
+    indices.add(5);
+    indices.add(6);
+
+    indices.add(6);
+    indices.add(7);
+
+    indices.add(7);
+    indices.add(4);
+
+    indices.add(4);
+    indices.add(0);
+
+    indices.add(5);
+    indices.add(1);
+
+    indices.add(6);
+    indices.add(2);
+
+    indices.add(7);
+    indices.add(3);
+
+    // set up object
     usualObjAdd(positions, indices);
   }
 
-
+  @Override
   public void draw(GLAutoDrawable gla, Matrix4f outModelView, Matrix4f proj) {
     GL3 gl = gla.getGL().getGL3();
     FloatBuffer fb16 = Buffers.newDirectFloatBuffer(16);
@@ -67,9 +97,6 @@ public class HollowCircle extends ASimpleObjectInstance {
         shaderLocations.getLocation("vColor")
         , 1, material.getAmbient().get(fb4));
 
-    //gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL3.GL_LINE); //OUTLINES
-
     meshObjList.get(0).draw(gla);
   }
-
 }
