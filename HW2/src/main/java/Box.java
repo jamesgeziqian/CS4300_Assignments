@@ -23,9 +23,9 @@ public class Box extends ASimpleObjectInstance {
 
   private void init() {
     //set up vertex attributes (in this case we have only position)
-    List<Vector4f> positions = new ArrayList<Vector4f>();
-    float d = 500;
-    float dd = 250;
+    List<Vector4f> positions = new ArrayList<>();
+    float d = 1000;
+    float dd = 500;
     positions.add(new Vector4f(d, -d, -dd, 1f));
     positions.add(new Vector4f(d, d, -dd, 1f));
     positions.add(new Vector4f(-d, d, -dd, 1f));
@@ -46,8 +46,8 @@ public class Box extends ASimpleObjectInstance {
     indices.add(2);
     indices.add(3);
 
-    indices.add(4);
-    indices.add(1);
+    indices.add(3);
+    indices.add(0);
 
     indices.add(4);
     indices.add(5);

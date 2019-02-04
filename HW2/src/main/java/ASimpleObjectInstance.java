@@ -78,7 +78,7 @@ public abstract class ASimpleObjectInstance implements ISimpleObjectInstance {
     PolygonMesh<IVertexData> mesh = new PolygonMesh<>();
     mesh.setVertexData(transFormPositions(positions));
     mesh.setPrimitives(indices);
-    mesh.setPrimitiveType(GL.GL_LINE_STRIP);
+    mesh.setPrimitiveType(GL.GL_LINES);
     mesh.setPrimitiveSize(3);
     return mesh;
   }

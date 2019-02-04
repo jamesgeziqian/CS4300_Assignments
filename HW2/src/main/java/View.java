@@ -160,7 +160,7 @@ class View {
     // look at info
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
-        .lookAt(new Vector3f(0, 250, 0), new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
+        .lookAt(new Vector3f(2000, 2000, 1000), new Vector3f(0, 0, 0), new Vector3f(0, 0, 1));
 
     // draw box
     starMap.get("box").draw(gla, modelView.peek(), proj);
