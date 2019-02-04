@@ -74,16 +74,16 @@ public abstract class ASimpleObjectInstance implements ISimpleObjectInstance {
     return vertexData;
   }
 
-  static PolygonMesh<IVertexData> usualMeshSetup(List<Vector4f> positions, List<Integer> indices) {
+  static PolygonMesh<IVertexData> usualMeshSetup(List<Vector4f> positions, List<Integer> indices, int primitiveType) {
     PolygonMesh<IVertexData> mesh = new PolygonMesh<>();
     mesh.setVertexData(transFormPositions(positions));
     mesh.setPrimitives(indices);
-    mesh.setPrimitiveType(GL.GL_LINES);
+    mesh.setPrimitiveType(primitiveType);
     mesh.setPrimitiveSize(3);
     return mesh;
   }
 
-  void usualObjAdd(List<Vector4f> positions, List<Integer> indices) {
+  void usualObjAdd(List<Vector4f> positions, List<Integer> indices, int primitiveType) {
     Map<String, String> shaderToVertexAttribute = new HashMap<>();
     shaderToVertexAttribute.put("vPosition", "position");
     meshObjList.add(new ObjectInstance(
@@ -91,7 +91,7 @@ public abstract class ASimpleObjectInstance implements ISimpleObjectInstance {
         this.program,
         this.shaderLocations,
         shaderToVertexAttribute,
-        usualMeshSetup(positions, indices),
+        usualMeshSetup(positions, indices, primitiveType),
         this.name));
   }
 

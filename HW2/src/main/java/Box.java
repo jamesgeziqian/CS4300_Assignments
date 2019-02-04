@@ -1,4 +1,5 @@
 import com.jogamp.common.nio.Buffers;
+import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import java.nio.FloatBuffer;
@@ -25,7 +26,7 @@ public class Box extends ASimpleObjectInstance {
     //set up vertex attributes (in this case we have only position)
     List<Vector4f> positions = new ArrayList<>();
     float d = 1000;
-    float dd = 500;
+    float dd = 400;
     positions.add(new Vector4f(d, -d, -dd, 1f));
     positions.add(new Vector4f(d, d, -dd, 1f));
     positions.add(new Vector4f(-d, d, -dd, 1f));
@@ -74,7 +75,7 @@ public class Box extends ASimpleObjectInstance {
     indices.add(3);
 
     // set up object
-    usualObjAdd(positions, indices);
+    usualObjAdd(positions, indices, GL.GL_LINES);
   }
 
   @Override

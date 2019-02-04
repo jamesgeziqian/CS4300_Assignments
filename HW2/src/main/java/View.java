@@ -294,21 +294,26 @@ class View {
     starMap.get("planet4Satellite1").draw(gla, modelView.peek(), proj);
     // pop planet 1 satellite 1 info
     modelView.pop(); // planet1 satellite1 info
-    float P4_S2_REV_RAD = 90;
+    float P4_S2_REV_RAD_A = 120;
+    float P4_S2_REV_RAD_B = 110;
+    float P4_S2_REV_EA = (float) Math
+        .sqrt(1 - (P4_S2_REV_RAD_B * P4_S2_REV_RAD_B / P4_S2_REV_RAD_A / P4_S2_REV_RAD_A)) * P4_S2_REV_RAD_A;
     float P4_S2_REV_ANG = (float) Math.toRadians(time / 1.5);
     // orbit info
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
-        .scale(P4_S2_REV_RAD, P4_S2_REV_RAD, 1);
+        .translate(P4_S2_REV_EA,0,0)
+        .scale(P4_S2_REV_RAD_A, P4_S2_REV_RAD_B, 1);
     starMap.get("orbit").draw(gla, modelView.peek(), proj);
     // pop orbit info
     modelView.pop();
     // planet4 satellite2
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
+        .translate(P4_S2_REV_EA,0,0)
         .translate(
-            P4_S2_REV_RAD * (float) Math.cos(P4_S2_REV_ANG),
-            P4_S2_REV_RAD * (float) Math.sin(P4_S2_REV_ANG),
+            P4_S2_REV_RAD_A * (float) Math.cos(P4_S2_REV_ANG),
+            P4_S2_REV_RAD_B * (float) Math.sin(P4_S2_REV_ANG),
             0);
     starMap.get("planet4Satellite2").draw(gla, modelView.peek(), proj);
     // pop planet 4 satellite 2 info

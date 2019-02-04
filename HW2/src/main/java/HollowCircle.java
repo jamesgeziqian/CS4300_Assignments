@@ -39,12 +39,11 @@ public class HollowCircle extends ASimpleObjectInstance {
 
     // set up indices
     List<Integer> indices = new ArrayList<>();
-    for (int i = 0; i < NUM_SIDE; i++) {
+    for (int i = 0; i < NUM_SIDE + 1; i++) {
       indices.add(i);
-      indices.add(i + 1);
     }
     // add object to object list
-    usualObjAdd(positions, indices);
+    usualObjAdd(positions, indices, GL.GL_LINE_STRIP);
   }
 
 
