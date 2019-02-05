@@ -22,6 +22,7 @@ import java.util.Map;
 
 class View {
 
+  private float lookAtDistance, theta, phi;
   private int WINDOW_WIDTH, WINDOW_HEIGHT;
   private Matrix4f proj;
   private Stack<Matrix4f> modelView;
@@ -39,6 +40,8 @@ class View {
 
     modelView = new Stack<>();
     modelView.push(new Matrix4f().identity());
+    lookAtDistance = 2000;
+    theta = phi = 0;
 
     timer = new Timer(true);
     timer.schedule(new TimerTask() {
@@ -160,7 +163,9 @@ class View {
     // look at info
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
-        .lookAt(new Vector3f(2000, 2000, 1000), new Vector3f(0, 0, 0), new Vector3f(0, 0, 1));
+        .lookAt(new Vector3f(0, 0, lookAtDistance),
+            new Vector3f(0, 0, 0), new Vector3f(1, 0, 0))
+        .mul(this.rotateMatrix());
 
     // draw box
     starMap.get("box").draw(gla, modelView.peek(), proj);
@@ -297,12 +302,13 @@ class View {
     float P4_S2_REV_RAD_A = 120;
     float P4_S2_REV_RAD_B = 110;
     float P4_S2_REV_EA = (float) Math
-        .sqrt(1 - (P4_S2_REV_RAD_B * P4_S2_REV_RAD_B / P4_S2_REV_RAD_A / P4_S2_REV_RAD_A)) * P4_S2_REV_RAD_A;
+        .sqrt(1 - (P4_S2_REV_RAD_B * P4_S2_REV_RAD_B / P4_S2_REV_RAD_A / P4_S2_REV_RAD_A))
+        * P4_S2_REV_RAD_A;
     float P4_S2_REV_ANG = (float) Math.toRadians(time / 1.5);
     // orbit info
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
-        .translate(P4_S2_REV_EA,0,0)
+        .translate(P4_S2_REV_EA, 0, 0)
         .scale(P4_S2_REV_RAD_A, P4_S2_REV_RAD_B, 1);
     starMap.get("orbit").draw(gla, modelView.peek(), proj);
     // pop orbit info
@@ -310,7 +316,7 @@ class View {
     // planet4 satellite2
     modelView.push(new Matrix4f(modelView.peek()));
     modelView.peek()
-        .translate(P4_S2_REV_EA,0,0)
+        .translate(P4_S2_REV_EA, 0, 0)
         .translate(
             P4_S2_REV_RAD_A * (float) Math.cos(P4_S2_REV_ANG),
             P4_S2_REV_RAD_B * (float) Math.sin(P4_S2_REV_ANG),
@@ -358,5 +364,23 @@ class View {
     for (ISimpleObjectInstance obj : starMap.values()) {
       obj.cleanup(gla);
     }
+  }
+
+  Matrix4f rotateMatrix() {
+    Matrix4f result = new Matrix4f();
+    result.rotate(theta, 1, 0, 0);
+    result.rotate(phi, 0, 1, 0);
+    return result;
+  }
+
+  void setAngles(float xDistance, float yDistance) {
+    System.out.printf("theta was: %f, phi was: %f\n", theta, phi);
+    theta += 10 * xDistance / lookAtDistance;
+    phi += 10 * yDistance / lookAtDistance;
+    System.out.printf("theta is: %f, phi was: %f\n", theta, phi);
+  }
+
+  void zoom(float distance) {
+    lookAtDistance = Math.max(0f, lookAtDistance - distance);
   }
 }

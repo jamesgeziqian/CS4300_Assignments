@@ -12,27 +12,24 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
-import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.AnimatorBase;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.PMVMatrix;
-import com.jogamp.opengl.util.awt.TextRenderer;
 
 import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.nio.IntBuffer;
+import java.awt.event.*;
 
 /**
  * Created by ashesh on 9/18/2015.
  */
 public class JOGLFrame extends JFrame {
+
   private View view;
   private MyTextRenderer textRenderer;
   private GLCanvas canvas;
+  private int mouseX, mouseY;
 
   public JOGLFrame(String title) {
     //routine JFrame setting stuff
@@ -49,41 +46,15 @@ public class JOGLFrame extends JFrame {
 
     add(canvas);
 
+    EventListener listener = new EventListener();
+    canvas.addGLEventListener(listener);
 
-    canvas.addGLEventListener(new GLEventListener() {
-      @Override
-      public void init(GLAutoDrawable glAutoDrawable) { //called the first time this canvas is created. Do your initialization here
-        try {
-          view.init(glAutoDrawable);
-          textRenderer = new MyTextRenderer(glAutoDrawable);
-          glAutoDrawable.getGL().setSwapInterval(1);
-        } catch (Exception e) {
-          JOptionPane.showMessageDialog(JOGLFrame.this, e.getMessage(), "Error while loading", JOptionPane.ERROR_MESSAGE);
-        }
-      }
-
-      @Override
-      public void dispose(GLAutoDrawable glAutoDrawable) { //called when the canvas is destroyed.
-        view.dispose(glAutoDrawable);
-        textRenderer.dispose(glAutoDrawable);
-      }
-
-      @Override
-      public void display(GLAutoDrawable glAutoDrawable) { //called every time this window must be redrawn
-
-        view.draw(glAutoDrawable);
-        String text = "Frame rate: " + canvas.getAnimator().getLastFPS();
-        textRenderer.drawText(glAutoDrawable,text,10,canvas.getSurfaceHeight()-50,1,0,0,20.0f);
-
-      }
-
-      @Override
-      public void reshape(GLAutoDrawable glAutoDrawable, int x, int y, int width, int height) { //called every time this canvas is resized
-        view.reshape(glAutoDrawable, x, y, width, height);
-        textRenderer.reshape(glAutoDrawable,canvas.getSurfaceWidth(),canvas.getSurfaceHeight());
-        repaint(); //refresh window
-      }
-    });
+    canvas.addMouseListener(listener);
+    canvas.addMouseMotionListener(listener);
+    canvas.addMouseWheelListener(listener);
+    canvas.addKeyListener(listener);
+    canvas.setFocusable(true);
+    canvas.requestFocus();
 
     //Add an animator to the canvas
     AnimatorBase animator = new FPSAnimator(canvas, 300);
@@ -91,7 +62,79 @@ public class JOGLFrame extends JFrame {
     animator.start();
   }
 
+  class EventListener extends MouseAdapter implements GLEventListener, KeyListener {
+
+    @Override
+    public void init(
+        GLAutoDrawable glAutoDrawable) { //called the first time this canvas is created. Do your initialization here
+      try {
+        view.init(glAutoDrawable);
+        textRenderer = new MyTextRenderer(glAutoDrawable);
+        glAutoDrawable.getGL().setSwapInterval(1);
+      } catch (Exception e) {
+        JOptionPane.showMessageDialog(JOGLFrame.this, e.getMessage(), "Error while loading",
+            JOptionPane.ERROR_MESSAGE);
+      }
+    }
+
+    @Override
+    public void dispose(GLAutoDrawable glAutoDrawable) { //called when the canvas is destroyed.
+      view.dispose(glAutoDrawable);
+      textRenderer.dispose(glAutoDrawable);
+    }
+
+    @Override
+    public void display(
+        GLAutoDrawable glAutoDrawable) { //called every time this window must be redrawn
+
+      view.draw(glAutoDrawable);
+    }
+
+    @Override
+    public void reshape(GLAutoDrawable glAutoDrawable, int x, int y, int width,
+        int height) { //called every time this canvas is resized
+      view.reshape(glAutoDrawable, x, y, width, height);
+      textRenderer.reshape(glAutoDrawable, canvas.getSurfaceWidth(), canvas.getSurfaceHeight());
+      repaint(); //refresh window
+    }
+
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+      mouseX = e.getX();
+      mouseY = canvas.getHeight() - e.getY();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+      view.setAngles(e.getX() - mouseX, canvas.getHeight() - e.getY() - mouseY);
+      mouseX = e.getX();
+      mouseY = canvas.getHeight() - e.getY();
+      canvas.repaint();
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+  }
+
   private class MyTextRenderer {
+
     private TextRegionUtil textRegionUtil;
     private RenderState renderState;
     private RegionRenderer regionRenderer;
@@ -107,7 +150,7 @@ public class JOGLFrame extends JFrame {
 
       //set up the text rendering
       textVAO = IntBuffer.allocate(1);
-      gl.glGenVertexArrays(1,textVAO);
+      gl.glGenVertexArrays(1, textVAO);
       gl.glBindVertexArray(textVAO.get(0));
       /**
        *  JogAmp FontFactory will load a true type font
@@ -125,14 +168,16 @@ public class JOGLFrame extends JFrame {
       //define a RED color to render our shape with
       renderState.setColorStatic(1.0f, 0.0f, 0.0f, 1.0f);
       renderState.setHintMask(RenderState.BITHINT_GLOBAL_DEPTH_TEST_ENABLED);
-      regionRenderer = RegionRenderer.create(renderState, RegionRenderer.defaultBlendEnable, RegionRenderer.defaultBlendDisable);
+      regionRenderer = RegionRenderer.create(renderState, RegionRenderer.defaultBlendEnable,
+          RegionRenderer.defaultBlendDisable);
       regionRenderer.init(gl, Region.MSAA_RENDERING_BIT);
       textRegionUtil = new TextRegionUtil(Region.MSAA_RENDERING_BIT);
 
 
     }
 
-    public void drawText(GLAutoDrawable glAutoDrawable,String text,int x, int y,float r,float g,float b,float fontSize) {
+    public void drawText(GLAutoDrawable glAutoDrawable, String text, int x, int y, float r, float g,
+        float b, float fontSize) {
       GL3 gl = glAutoDrawable.getGL().getGL3();
 
       gl.glClear(GL.GL_DEPTH_BUFFER_BIT);
@@ -146,32 +191,31 @@ public class JOGLFrame extends JFrame {
       final PMVMatrix pmv = regionRenderer.getMatrix();
       pmv.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
       pmv.glLoadIdentity();
-      pmv.glTranslatef(x,y,-999.0f);
+      pmv.glTranslatef(x, y, -999.0f);
 
-      regionRenderer.enable(gl,true);
+      regionRenderer.enable(gl, true);
       gl.glBindVertexArray(textVAO.get(0));
-      renderState.setColorStatic(r,g,b,1.0f);
-      textRegionUtil.drawString3D(gl,regionRenderer,font,fontSize,text,null,sampleCount);
+      renderState.setColorStatic(r, g, b, 1.0f);
+      textRegionUtil.drawString3D(gl, regionRenderer, font, fontSize, text, null, sampleCount);
       gl.glBindVertexArray(0);
-      regionRenderer.enable(gl,false);
+      regionRenderer.enable(gl, false);
     }
 
     public void dispose(GLAutoDrawable glAutoDrawable) {
       GL3 gl = glAutoDrawable.getGL().getGL3();
-      gl.glDeleteVertexArrays(1,textVAO);
+      gl.glDeleteVertexArrays(1, textVAO);
 
     }
 
-    public void reshape(GLAutoDrawable glAutoDrawable,int width,int height) {
+    public void reshape(GLAutoDrawable glAutoDrawable, int width, int height) {
       GL3 gl = glAutoDrawable.getGL().getGL3();
-      regionRenderer.enable(gl,true);
-      regionRenderer.reshapeOrtho(width,height,0.1f,1000.0f);
-      regionRenderer.enable(gl,false);
+      regionRenderer.enable(gl, true);
+      regionRenderer.reshapeOrtho(width, height, 0.1f, 1000.0f);
+      regionRenderer.enable(gl, false);
     }
 
 
   }
-
 
 
 }
