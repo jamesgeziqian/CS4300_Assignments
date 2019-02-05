@@ -22,7 +22,7 @@ import java.util.Map;
 
 class View {
 
-  private float lookAtDistance, theta, phi;
+  private float lookAtDistance, rotateX, rotateY, rotateZ;
   private int WINDOW_WIDTH, WINDOW_HEIGHT;
   private Matrix4f proj;
   private Stack<Matrix4f> modelView;
@@ -41,7 +41,7 @@ class View {
     modelView = new Stack<>();
     modelView.push(new Matrix4f().identity());
     lookAtDistance = 2000;
-    theta = phi = 0;
+    rotateX = rotateY = 0;
 
     timer = new Timer(true);
     timer.schedule(new TimerTask() {
@@ -375,8 +375,8 @@ class View {
 
   void setAngles(float xDistance, float yDistance) {
     System.out.printf("theta was: %f, phi was: %f\n", theta, phi);
-    theta += 10 * xDistance / lookAtDistance;
-    phi += 10 * yDistance / lookAtDistance;
+    theta += 5 * xDistance / lookAtDistance;
+    phi += 5 * yDistance / lookAtDistance;
     System.out.printf("theta is: %f, phi was: %f\n", theta, phi);
   }
 

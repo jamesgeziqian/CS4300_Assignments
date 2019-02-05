@@ -76,6 +76,27 @@ public class Box extends ASimpleObjectInstance {
 
     // set up object
     usualObjAdd(positions, indices, GL.GL_LINES);
+
+//    // set up indices
+//    List<Integer> indices2 = new ArrayList<>();
+//    indices2.add(0);
+//    indices2.add(1);
+//    indices2.add(3);
+//    indices2.add(2);
+//    indices2.add(1);
+//    indices2.add(3);
+//    usualObjAdd(positions, indices2, GL.GL_TRIANGLES);
+//
+//    // set up indices
+//    List<Integer> indices3 = new ArrayList<>();
+//    indices3.add(4);
+//    indices3.add(5);
+//    indices3.add(7);
+//    indices3.add(5);
+//    indices3.add(6);
+//    indices3.add(7);
+//    usualObjAdd(positions, indices3, GL.GL_TRIANGLES);
+
   }
 
   @Override
@@ -83,6 +104,7 @@ public class Box extends ASimpleObjectInstance {
     GL3 gl = gla.getGL().getGL3();
     FloatBuffer fb16 = Buffers.newDirectFloatBuffer(16);
     FloatBuffer fb4 = Buffers.newDirectFloatBuffer(4);
+    FloatBuffer fb42 = Buffers.newDirectFloatBuffer(4);
 
     gl.glUniformMatrix4fv(
         shaderLocations.getLocation("projection"),
@@ -99,5 +121,21 @@ public class Box extends ASimpleObjectInstance {
         , 1, material.getAmbient().get(fb4));
 
     meshObjList.get(0).draw(gla);
+
+//    material.setAmbient(1, 0, 0);
+//    //send the color of the triangle
+//    gl.glUniform4fv(
+//        shaderLocations.getLocation("vColor")
+//        , 1, material.getAmbient().get(fb42));
+//    meshObjList.get(1).draw(gla);
+//
+//    material.setAmbient(0, 0, 1);
+//    //send the color of the triangle
+//    gl.glUniform4fv(
+//        shaderLocations.getLocation("vColor")
+//        , 1, material.getAmbient().get(fb42));
+//    meshObjList.get(2).draw(gla);
+//
+//    material.setAmbient(1, 1, 1);
   }
 }
