@@ -22,9 +22,9 @@ import java.util.Map;
 
 class View {
 
-  private float lookAtDistance, rotateX, rotateY, rotateZ;
+  private float lookAtDistance;
   private int WINDOW_WIDTH, WINDOW_HEIGHT;
-  private Matrix4f proj;
+  private Matrix4f proj, rotateMatrix;
   private Stack<Matrix4f> modelView;
   private Map<String, ISimpleObjectInstance> starMap;
   private util.Material material;
@@ -41,7 +41,7 @@ class View {
     modelView = new Stack<>();
     modelView.push(new Matrix4f().identity());
     lookAtDistance = 2000;
-    rotateX = rotateY = 0;
+    rotateMatrix = new Matrix4f().identity();
 
     timer = new Timer(true);
     timer.schedule(new TimerTask() {
@@ -165,7 +165,7 @@ class View {
     modelView.peek()
         .lookAt(new Vector3f(0, 0, lookAtDistance),
             new Vector3f(0, 0, 0), new Vector3f(1, 0, 0))
-        .mul(this.rotateMatrix());
+        .mul(rotateMatrix);
 
     // draw box
     starMap.get("box").draw(gla, modelView.peek(), proj);
@@ -366,18 +366,13 @@ class View {
     }
   }
 
-  Matrix4f rotateMatrix() {
-    Matrix4f result = new Matrix4f();
-    result.rotate(theta, 1, 0, 0);
-    result.rotate(phi, 0, 1, 0);
-    return result;
-  }
-
   void setAngles(float xDistance, float yDistance) {
-    System.out.printf("theta was: %f, phi was: %f\n", theta, phi);
-    theta += 5 * xDistance / lookAtDistance;
-    phi += 5 * yDistance / lookAtDistance;
-    System.out.printf("theta is: %f, phi was: %f\n", theta, phi);
+    float theta = 5 * xDistance / lookAtDistance;
+    float phi = 5 * yDistance / lookAtDistance;
+    rotateMatrix = new Matrix4f()
+        .rotate(phi, 0, 1, 0)
+        .rotate(theta, 1, 0, 0)
+        .mul(rotateMatrix);
   }
 
   void zoom(float distance) {
