@@ -25,16 +25,16 @@ public class Box extends ASimpleObjectInstance {
   private void init() {
     //set up vertex attributes (in this case we have only position)
     List<Vector4f> positions = new ArrayList<>();
-    float d = 1000;
-    float dd = 400;
-    positions.add(new Vector4f(d, -d, -dd, 1f));
-    positions.add(new Vector4f(d, d, -dd, 1f));
-    positions.add(new Vector4f(-d, d, -dd, 1f));
-    positions.add(new Vector4f(-d, -d, -dd, 1f));
-    positions.add(new Vector4f(d, -d, dd, 1f));
-    positions.add(new Vector4f(d, d, dd, 1f));
-    positions.add(new Vector4f(-d, d, dd, 1f));
-    positions.add(new Vector4f(-d, -d, dd, 1f));
+    float halfXandY = 1500;
+    float halfZ = 600;
+    positions.add(new Vector4f(halfXandY, -halfXandY, -halfZ, 1f));
+    positions.add(new Vector4f(halfXandY, halfXandY, -halfZ, 1f));
+    positions.add(new Vector4f(-halfXandY, halfXandY, -halfZ, 1f));
+    positions.add(new Vector4f(-halfXandY, -halfXandY, -halfZ, 1f));
+    positions.add(new Vector4f(halfXandY, -halfXandY, halfZ, 1f));
+    positions.add(new Vector4f(halfXandY, halfXandY, halfZ, 1f));
+    positions.add(new Vector4f(-halfXandY, halfXandY, halfZ, 1f));
+    positions.add(new Vector4f(-halfXandY, -halfXandY, halfZ, 1f));
 
     // set up indices
     List<Integer> indices = new ArrayList<>();
@@ -77,26 +77,6 @@ public class Box extends ASimpleObjectInstance {
     // set up object
     usualObjAdd(positions, indices, GL.GL_LINES);
 
-//    // set up indices
-//    List<Integer> indices2 = new ArrayList<>();
-//    indices2.add(0);
-//    indices2.add(1);
-//    indices2.add(3);
-//    indices2.add(2);
-//    indices2.add(1);
-//    indices2.add(3);
-//    usualObjAdd(positions, indices2, GL.GL_TRIANGLES);
-//
-//    // set up indices
-//    List<Integer> indices3 = new ArrayList<>();
-//    indices3.add(4);
-//    indices3.add(5);
-//    indices3.add(7);
-//    indices3.add(5);
-//    indices3.add(6);
-//    indices3.add(7);
-//    usualObjAdd(positions, indices3, GL.GL_TRIANGLES);
-
   }
 
   @Override
@@ -121,21 +101,5 @@ public class Box extends ASimpleObjectInstance {
         , 1, material.getAmbient().get(fb4));
 
     meshObjList.get(0).draw(gla);
-
-//    material.setAmbient(1, 0, 0);
-//    //send the color of the triangle
-//    gl.glUniform4fv(
-//        shaderLocations.getLocation("vColor")
-//        , 1, material.getAmbient().get(fb42));
-//    meshObjList.get(1).draw(gla);
-//
-//    material.setAmbient(0, 0, 1);
-//    //send the color of the triangle
-//    gl.glUniform4fv(
-//        shaderLocations.getLocation("vColor")
-//        , 1, material.getAmbient().get(fb42));
-//    meshObjList.get(2).draw(gla);
-//
-//    material.setAmbient(1, 1, 1);
   }
 }

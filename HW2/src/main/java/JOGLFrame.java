@@ -34,7 +34,7 @@ public class JOGLFrame extends JFrame {
   public JOGLFrame(String title) {
     //routine JFrame setting stuff
     super(title);
-    setSize(400, 400); //this opens a 400x400 window
+    setSize(800, 800); //this opens a 400x400 window
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //when X is pressed, close program
 
     //Our View class is the actual driver of the OpenGL stuff
@@ -107,7 +107,7 @@ public class JOGLFrame extends JFrame {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-      view.setAngles(e.getX() - mouseX, canvas.getHeight() - e.getY() - mouseY);
+      view.setRotationMatrix(e.getX() - mouseX, canvas.getHeight() - e.getY() - mouseY);
       mouseX = e.getX();
       mouseY = canvas.getHeight() - e.getY();
       canvas.repaint();
@@ -119,7 +119,6 @@ public class JOGLFrame extends JFrame {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -128,7 +127,6 @@ public class JOGLFrame extends JFrame {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 
   }
