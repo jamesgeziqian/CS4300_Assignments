@@ -12,6 +12,9 @@ import org.joml.Matrix4f;
 import util.ShaderLocationsVault;
 import util.ShaderProgram;
 
+/**
+ * This class draws a ball
+ */
 public class Sphere extends ASimpleObjectInstance {
 
   private Matrix4f modelView;
@@ -30,16 +33,9 @@ public class Sphere extends ASimpleObjectInstance {
     init();
   }
 
-  Sphere(GL3 gl,
-      ShaderProgram program,
-      ShaderLocationsVault shaderLocations,
-      String name,
-      float r,
-      float g,
-      float b) throws FileNotFoundException {
-    this(gl, program, shaderLocations, new Matrix4f().identity(), name, r, g, b);
-  }
-
+  /**
+   * Read the sphere obj file and create a object of a ball
+   */
   private void init() throws FileNotFoundException {
     InputStream in = new FileInputStream("models/sphere.obj");
     util.PolygonMesh mesh = util.ObjImporter.importFile(new VertexAttribProducer(), in, true);
@@ -52,6 +48,7 @@ public class Sphere extends ASimpleObjectInstance {
         mesh, name));
   }
 
+  @Override
   public void draw(GLAutoDrawable gla, Matrix4f outModelView, Matrix4f proj) {
     GL3 gl = gla.getGL().getGL3();
     FloatBuffer fb16 = Buffers.newDirectFloatBuffer(16);

@@ -1,4 +1,3 @@
-import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import java.util.ArrayList;
@@ -54,12 +53,16 @@ public abstract class ASimpleObjectInstance implements ISimpleObjectInstance {
     material = mat;
   }
 
+  @Override
   public void cleanup(GLAutoDrawable gla) {
     for (ObjectInstance obj : meshObjList) {
       obj.cleanup(gla);
     }
   }
 
+  /**
+   * This is a helper functions translates List of Vector4f to list of IVertexData
+   */
   static List<IVertexData> transFormPositions(List<Vector4f> positions) {
     List<IVertexData> vertexData = new ArrayList<>();
     VertexAttribProducer producer = new VertexAttribProducer();
@@ -74,6 +77,9 @@ public abstract class ASimpleObjectInstance implements ISimpleObjectInstance {
     return vertexData;
   }
 
+  /**
+   * This is a helper function to build a polygon mash.
+   */
   static PolygonMesh<IVertexData> usualMeshSetup(List<Vector4f> positions, List<Integer> indices, int primitiveType) {
     PolygonMesh<IVertexData> mesh = new PolygonMesh<>();
     mesh.setVertexData(transFormPositions(positions));
@@ -83,6 +89,12 @@ public abstract class ASimpleObjectInstance implements ISimpleObjectInstance {
     return mesh;
   }
 
+  /**
+   * This is designed for child class to add object to object list in this class.
+   * @param positions Passed in positions of a object
+   * @param indices Passed in indices of a object
+   * @param primitiveType The way to interpret positions and indices.
+   */
   void usualObjAdd(List<Vector4f> positions, List<Integer> indices, int primitiveType) {
     Map<String, String> shaderToVertexAttribute = new HashMap<>();
     shaderToVertexAttribute.put("vPosition", "position");

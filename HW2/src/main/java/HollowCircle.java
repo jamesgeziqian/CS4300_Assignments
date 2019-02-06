@@ -16,6 +16,9 @@ import util.PolygonMesh;
 import util.ShaderLocationsVault;
 import util.ShaderProgram;
 
+/**
+ * This class stores object representing an orbit.
+ */
 public class HollowCircle extends ASimpleObjectInstance {
 
   HollowCircle(
@@ -28,6 +31,9 @@ public class HollowCircle extends ASimpleObjectInstance {
     init();
   }
 
+  /**
+   * This method initializes a unit hollow circle.
+   */
   private void init() {
     int NUM_SIDE = 360;
     //set up positions
@@ -46,7 +52,7 @@ public class HollowCircle extends ASimpleObjectInstance {
     usualObjAdd(positions, indices, GL.GL_LINE_STRIP);
   }
 
-
+  @Override
   public void draw(GLAutoDrawable gla, Matrix4f outModelView, Matrix4f proj) {
     GL3 gl = gla.getGL().getGL3();
     FloatBuffer fb16 = Buffers.newDirectFloatBuffer(16);

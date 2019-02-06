@@ -44,6 +44,7 @@ class View {
     rotateMatrix = new Matrix4f().identity();
 
     timer = new Timer(true);
+    // time adds every 10 ms
     timer.schedule(new TimerTask() {
       @Override
       public void run() {

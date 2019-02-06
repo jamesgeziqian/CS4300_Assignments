@@ -10,6 +10,9 @@ import org.joml.Vector4f;
 import util.ShaderLocationsVault;
 import util.ShaderProgram;
 
+/**
+ * This class renders the 12 edge of the box.
+ */
 public class Box extends ASimpleObjectInstance {
 
   Box(
