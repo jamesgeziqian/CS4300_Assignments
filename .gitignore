@@ -10,3 +10,4 @@ HW2/.idea/.name
 *.class
 HW2/target/classes/Box.class
 HW2/target/classes/HollowCircle.class
+*.iml
