@@ -367,11 +367,6 @@ class View {
     WINDOW_HEIGHT = height;
     gl.glViewport(0, 0, width, height);
 
-    proj = new Matrix4f().perspective((float) Math.toRadians(60.0f),
-        (float) width / height,
-        0.1f,
-        100000.0f);
-
     float WINDOW_SIZE = 2000;
     if (width > height) {
       proj = new Matrix4f()
