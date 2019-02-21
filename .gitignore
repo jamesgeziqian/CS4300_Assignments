@@ -1,13 +1,8 @@
 
 HW2/.idea/.name
-*.xml
 *.class
 *.frag
 *.vert
-*.class
-*.class
-*.class
-*.class
 HW2/target/classes/Box.class
 HW2/target/classes/HollowCircle.class
 *.iml
