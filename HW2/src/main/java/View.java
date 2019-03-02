@@ -1,137 +1,47 @@
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.*;
 
-import com.jogamp.opengl.math.Matrix4;
-import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
 import util.*;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-class View {
 
-  private float lookAtDistance;
+/**
+ * Created by ashesh on 9/18/2015.
+ *
+ * The View class is the "controller" of all our OpenGL stuff. It cleanly encapsulates all our
+ * OpenGL functionality from the rest of Java GUI, managed by the JOGLFrame class.
+ */
+public class View {
+
   private int WINDOW_WIDTH, WINDOW_HEIGHT;
-  private Matrix4f proj, rotateMatrix;
-  private Stack<Matrix4f> modelView;
-  private Map<String, ISimpleObjectInstance> starMap;
-  private util.Material material;
+  private Matrix4f proj, lookAt, rotation;
+  private ISolarSystemModel[] solarSystem;
 
-  private util.ShaderProgram program;
-  private float time;
-  private Timer timer;
+  private ShaderProgram program;
   private ShaderLocationsVault shaderLocations;
 
-  View() {
-    proj = new Matrix4f();
-    proj.identity();
 
-    modelView = new Stack<>();
-    modelView.push(new Matrix4f().identity());
-    lookAtDistance = 2800;
-    rotateMatrix = new Matrix4f().identity();
-
-    timer = new Timer(true);
-    // time adds every 10 ms
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        time++;
-      }
-    }, 10, 10);
-    time = 0;
-    starMap = new HashMap<>();
+  /**
+   * Construct a View object. Set up current position and rotation.
+   */
+  public View() {
+    proj = new Matrix4f().identity();
+    lookAt = new Matrix4f().identity();
+    rotation = new Matrix4f().identity();
   }
 
-  private void initObjects(GL3 gl) throws FileNotFoundException {
-    // sun init
-    float SUN_RADIUS = 80f;
-    float SUN_ROTATION = (float) Math.toRadians(time);
-    Matrix4f sunMatrix = new Matrix4f()
-        .mul(new Matrix4f().rotate(SUN_ROTATION, 0, 1, 0))
-        .scale(SUN_RADIUS, SUN_RADIUS, SUN_RADIUS);
-    starMap.put("sun",
-        new Sphere(gl, program, shaderLocations, sunMatrix, "sun", .988f, .831f, .251f));
-
-    // planet1 init
-    float P1_RADIUS = 20f;
-    Matrix4f planet1Matrix = new Matrix4f()
-        .scale(P1_RADIUS, P1_RADIUS, P1_RADIUS);
-    starMap.put("planet1",
-        new Sphere(gl, program, shaderLocations, planet1Matrix, "planet1", .4f, .8f, 1));
-
-    // planet1 satellite1
-    float P1_S1_RADIUS = 20f;
-    Matrix4f planet1Satellite1Matrix = new Matrix4f()
-        .scale(P1_S1_RADIUS, P1_S1_RADIUS, P1_S1_RADIUS);
-    starMap.put("planet1Satellite1",
-        new Sphere(gl, program, shaderLocations, planet1Satellite1Matrix, "planet1Satellite1", .5f,
-            .5f, .5f));
-
-    // planet2
-    float P2_RADIUS = 35f;
-    Matrix4f planet2Matrix = new Matrix4f()
-        .scale(P2_RADIUS, P2_RADIUS, P2_RADIUS);
-    starMap.put("planet2",
-        new Sphere(gl, program, shaderLocations, planet2Matrix, "planet2", .757f, .267f, .055f));
-
-    // planet3
-    float P3_RADIUS = 50f;
-    Matrix4f planet3Matrix = new Matrix4f()
-        .scale(P3_RADIUS, P3_RADIUS, P3_RADIUS);
-    starMap.put("planet3",
-        new Sphere(gl, program, shaderLocations, planet3Matrix, "planet3", .992f, .651f, 0f));
-
-    // planet4
-    float P4_RADIUS = 60f;
-    Matrix4f planet4Matrix = new Matrix4f()
-        .scale(P4_RADIUS, P4_RADIUS, P4_RADIUS);
-    starMap.put("planet4",
-        new Sphere(gl, program, shaderLocations, planet4Matrix, "planet4", 0f, .773f, .5f));
-
-    // planet4 satellite1
-    float P4_S1_RADIUS = 10f;
-    Matrix4f planet4Satellite1Matrix = new Matrix4f()
-        .scale(P4_S1_RADIUS, P4_S1_RADIUS, P4_S1_RADIUS);
-    starMap.put("planet4Satellite1",
-        new Sphere(gl, program, shaderLocations, planet4Satellite1Matrix, "planet4Satellite1", 0,
-            0, 1));
-
-    // planet4 satellite1
-    float P4_S2_RADIUS = 15f;
-    Matrix4f planet4Satellite2Matrix = new Matrix4f()
-        .scale(P4_S2_RADIUS, P4_S2_RADIUS, P4_S2_RADIUS);
-    starMap.put("planet4Satellite2",
-        new Sphere(gl, program, shaderLocations, planet4Satellite2Matrix, "planet4Satellite2", 1,
-            .753f, 0.796f));
-    starMap.put("orbit", new HollowCircle(gl, program, shaderLocations, "orbit", 1, 1, 1));
-
-    // planet with spiral orbit setup
-    float PS_RADIUS = 40f;
-    Matrix4f planetSpMatrix = new Matrix4f()
-        .scale(PS_RADIUS, PS_RADIUS, PS_RADIUS);
-    starMap.put("planetSpiral",
-        new Sphere(gl, program, shaderLocations, planetSpMatrix, "planetSpiral", 1,
-            0f, 0f));
-
-    // box setup
-    starMap.put("box", new Box(gl, program, shaderLocations, "box", .5f, .5f, .5f));
-  }
-
-  void init(GLAutoDrawable gla) throws Exception {
-    GL3 gl = (GL3) gla.getGL().getGL3();
+  /**
+   * Initialize the solar system model and shader program.
+   *
+   * @param gla the canvas that the program will be drawing on
+   * @throws Exception shader program will throw out exception when shader files are not found
+   */
+  public void init(GLAutoDrawable gla) throws Exception {
+    GL3 gl = gla.getGL().getGL3();
 
     //compile and make our shader program. Look at the ShaderProgram class for details on how this is done
     program = new ShaderProgram();
@@ -139,14 +49,21 @@ class View {
 
     shaderLocations = program.getAllShaderVariables(gl);
 
-    initObjects(gl);
-
-
+    solarSystem = new ISolarSystemModel[3];
+    solarSystem[0] = new CelestialBody(gla, program, shaderLocations);
+    solarSystem[1] = new Orbit(gla, program, shaderLocations);
+    solarSystem[2] = new UniverseBox(gla, program, shaderLocations);
   }
 
 
-  void draw(GLAutoDrawable gla) {
+  /**
+   * This method will draw images on the canvas space according to the current state.
+   *
+   * @param gla the canvas that we will be drawing on
+   */
+  public void draw(GLAutoDrawable gla) {
     GL3 gl = gla.getGL().getGL3();
+    FloatBuffer fb16 = Buffers.newDirectFloatBuffer(16);
 
     //set the background color to be black
     gl.glClearColor(0, 0, 0, 1);
@@ -156,247 +73,70 @@ class View {
     //enable the shader program
     program.enable(gl);
 
-    // look at info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .lookAt(new Vector3f(0, 0, lookAtDistance),
-            new Vector3f(0, 0, 0), new Vector3f(1, 0, 0))
-        .mul(rotateMatrix);
+    //pass the projection matrix to the shader
+    gl.glUniformMatrix4fv(
+        shaderLocations.getLocation("projection"),
+        1, false, proj.get(fb16));
 
-    // draw box
-    starMap.get("box").draw(gla, modelView.peek(), proj);
-    // draw sun
-    starMap.get("sun").draw(gla, modelView.peek(), proj);
+    gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL3.GL_LINE); //OUTLINES
 
-    // planet1 info
-    float P1_REV_RAD = 120;
-    float P1_REV_ANG = (float) Math.toRadians(time * 2);
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek().scale(P1_REV_RAD, P1_REV_RAD, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    // planet1
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .translate(
-            P1_REV_RAD * (float) Math.cos(P1_REV_ANG),
-            P1_REV_RAD * (float) Math.sin(P1_REV_ANG),
-            0);
-    starMap.get("planet1").draw(gla, modelView.peek(), proj);
-    // planet1 satellite1 info
-    float P1_S1_REV_RAD = 40;
-    float P1_S1_REV_ANG = (float) Math.toRadians(time * 5);
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek().scale(P1_S1_REV_RAD, P1_S1_REV_RAD, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .translate(
-            P1_S1_REV_RAD * (float) Math.cos(P1_S1_REV_ANG),
-            P1_S1_REV_RAD * (float) Math.sin(P1_S1_REV_ANG),
-            0);
-    starMap.get("planet1Satellite1").draw(gla, modelView.peek(), proj);
-    // pop planet 1 satellite 1 info
-    modelView.pop();
-    // pop planet 1 info
-    modelView.pop();
+    lookAt = new Matrix4f().lookAt(new Vector3f(0, 0, 3000), new Vector3f(0,
+        0, 0), new Vector3f(0, 1, 0));
 
-    // planet2 info
-    float P2_REV_RAD = 220;
-    float P2_REV_ANG = (float) Math.toRadians(time * 1.2);
-    float P2_ORBIT_ANG = (float) Math.PI / 6;
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .rotate(P2_ORBIT_ANG, 0, 1, 0)
-        .scale(P2_REV_RAD, P2_REV_RAD, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    // planet 2
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .rotate(P2_ORBIT_ANG, 0, 1, 0)
-        .translate(
-            P2_REV_RAD * (float) Math.cos(P2_REV_ANG),
-            P2_REV_RAD * (float) Math.sin(P2_REV_ANG),
-            0);
-    starMap.get("planet2").draw(gla, modelView.peek(), proj);
-    // pop planet 2 info
-    modelView.pop();
+    Matrix4f afterRotation = new Matrix4f(lookAt).mul(rotation);
 
-    // planet spiral info
-    float PS_REV_RAD = 1200f;
-    float PS_REV_ANG = (float) Math.toRadians(time / 10);
-    float PS_SPIRAL_RAD = 80f;
-    float PS_SPIRAL_ANG = (float) Math.toRadians(time * 6);
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .scale(PS_REV_RAD, PS_REV_RAD, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    // planet spiral
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .rotate(PS_REV_ANG, 0, 0, 1)
-        .translate(PS_REV_RAD, 0, 0)
-        .translate(
-            PS_SPIRAL_RAD * (float) Math.cos(PS_SPIRAL_ANG),
-            0,
-            PS_SPIRAL_RAD * (float) Math.sin(PS_SPIRAL_ANG));
-    starMap.get("planetSpiral").draw(gla, modelView.peek(), proj);
-    // pop planet spiral info
-    modelView.pop();
-
-    // planet3 info
-    float P3_REV_RAD_A = 450;
-    float P3_REV_RAD_B = 420;
-    float P3_REV_ANG = (float) Math.toRadians(time / 2);
-    float P3_REV_EA = (float) Math
-        .sqrt(1 - (P3_REV_RAD_B * P3_REV_RAD_B / P3_REV_RAD_A / P3_REV_RAD_A)) * P3_REV_RAD_A;
-    float P3_ORBIT_ANG = (float) Math.PI / 4;
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .rotate(P3_ORBIT_ANG, 1, 0, 0)
-        .translate(0 - P3_REV_EA, 0, 0)
-        .scale(P3_REV_RAD_A, P3_REV_RAD_B, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    // planet3
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .rotate(P3_ORBIT_ANG, 1, 0, 0)
-        .translate(0 - P3_REV_EA, 0, 0)
-        .translate(
-            P3_REV_RAD_A * (float) Math.cos(P3_REV_ANG),
-            P3_REV_RAD_B * (float) Math.sin(P3_REV_ANG),
-            0);
-    starMap.get("planet3").draw(gla, modelView.peek(), proj);
-    // pop planet 3 info
-    modelView.pop();
-
-    // planet4 info
-    float P4_REV_RAD = 900;
-    float P4_REV_ANG = (float) Math.toRadians(time * .2);
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .scale(P4_REV_RAD, P4_REV_RAD, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    // planet4
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .translate(
-            P4_REV_RAD * (float) Math.cos(P4_REV_ANG),
-            P4_REV_RAD * (float) Math.sin(P4_REV_ANG),
-            0);
-    starMap.get("planet4").draw(gla, modelView.peek(), proj);
-    // planet4 satellite1 info
-    float P4_S1_REV_RAD = 50;
-    float P4_S1_REV_ANG = (float) Math.toRadians(time * 6);
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .scale(P4_S1_REV_RAD, P4_S1_REV_RAD, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    // planet4 satellite1
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .translate(
-            P4_S1_REV_RAD * (float) Math.cos(P4_S1_REV_ANG),
-            P4_S1_REV_RAD * (float) Math.sin(P4_S1_REV_ANG),
-            0);
-    starMap.get("planet4Satellite1").draw(gla, modelView.peek(), proj);
-    // pop planet 4 satellite 1 info
-    modelView.pop();
-    // planet4 satellite3 info
-    float P4_S2_REV_RAD_A = 120;
-    float P4_S2_REV_RAD_B = 110;
-    float P4_S2_REV_EA = (float) Math
-        .sqrt(1 - (P4_S2_REV_RAD_B * P4_S2_REV_RAD_B / P4_S2_REV_RAD_A / P4_S2_REV_RAD_A))
-        * P4_S2_REV_RAD_A;
-    float P4_S2_REV_ANG = (float) Math.toRadians(time / 1.5);
-    // orbit info
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .translate(P4_S2_REV_EA, 0, 0)
-        .scale(P4_S2_REV_RAD_A, P4_S2_REV_RAD_B, 1);
-    starMap.get("orbit").draw(gla, modelView.peek(), proj);
-    // pop orbit info
-    modelView.pop();
-    // planet4 satellite2
-    modelView.push(new Matrix4f(modelView.peek()));
-    modelView.peek()
-        .translate(P4_S2_REV_EA, 0, 0)
-        .translate(
-            P4_S2_REV_RAD_A * (float) Math.cos(P4_S2_REV_ANG),
-            P4_S2_REV_RAD_B * (float) Math.sin(P4_S2_REV_ANG),
-            0);
-    starMap.get("planet4Satellite2").draw(gla, modelView.peek(), proj);
-    // pop planet 4 satellite 2 info
-    modelView.pop();
-    // pop planet 4 info
-    modelView.pop();
+    for (ISolarSystemModel system : solarSystem) {
+      system.draw(gla, new Matrix4f(afterRotation));
+    }
 
     gl.glFlush();
     //disable the program
     program.disable(gl);
     gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL3.GL_FILL); //BACK TO FILL
-
-    // pop look at info
-    modelView.pop();
   }
 
-  //this method is called from the JOGLFrame class, everytime the window resizes
-  void reshape(GLAutoDrawable gla, int x, int y, int width, int height) {
+  /**
+   * Rotate the model according to the direction user dragged the image to. Gimbals lock is avoided
+   * by applying the new rotation on top of all previous rotations.
+   *
+   * @param x horizontal dragging will result in a rotation about y-axis
+   * @param y vertical dragging will result in a rotation about x-axis
+   */
+  public void rotateOmega(int x, int y) {
+    Matrix4f rotationMatrix = new Matrix4f().identity();
+    rotationMatrix.rotateY((float) Math.toRadians(x));
+    rotationMatrix.rotateX((float) Math.toRadians(y));
+    this.rotation = rotationMatrix.mul(this.rotation);
+  }
+
+  /**
+   * This method will be called each time the window is reshaped and the content will be resized
+   * properly to maintain an appropriate proportion.
+   *
+   * @param gla the canvas that we will be drawing on
+   * @param width the new width of window
+   * @param height the new height of window
+   */
+  public void reshape(GLAutoDrawable gla, int x, int y, int width, int height) {
     GL gl = gla.getGL();
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
     gl.glViewport(0, 0, width, height);
 
-    float WINDOW_SIZE = 2000;
-    if (width > height) {
-      proj = new Matrix4f()
-          .ortho(-WINDOW_SIZE * width / height,
-              WINDOW_SIZE * width / height,
-              -WINDOW_SIZE, WINDOW_SIZE,
-              0.1f,
-              100000.0f);
-    } else {
-      proj = new Matrix4f()
-          .ortho(-WINDOW_SIZE,
-              WINDOW_SIZE,
-              -WINDOW_SIZE * height / width,
-              WINDOW_SIZE * height / width,
-              0.1f, 100000.0f);
-    }
+    proj = new Matrix4f().perspective((float) Math.toRadians(120.0f),
+        (float) width / height,
+        0.1f,
+        10000.0f);
   }
 
-  void dispose(GLAutoDrawable gla) {
-    for (ISimpleObjectInstance obj : starMap.values()) {
-      obj.cleanup(gla);
+  /**
+   * This method is called when the window is closed and will cleanup all the ObjectInstances.
+   *
+   * @param gla the canvas that we will be drawing on
+   */
+  public void dispose(GLAutoDrawable gla) {
+    for (ISolarSystemModel system : solarSystem) {
+      system.dispose(gla);
     }
-  }
-
-  void setRotationMatrix(float xDistance, float yDistance) {
-    float theta = 5 * xDistance / lookAtDistance;
-    float phi = 5 * yDistance / lookAtDistance;
-    rotateMatrix = new Matrix4f()
-        .rotate(phi, 0, 1, 0)
-        .rotate(theta, 1, 0, 0)
-        .mul(rotateMatrix);
   }
 }
