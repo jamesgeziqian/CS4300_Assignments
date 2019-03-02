@@ -2,14 +2,13 @@ import org.joml.Vector4f;
 
 
 /**
- * This class represents the attributes of a single vertex. It is useful in building PolygonMesh
- * objects for many examples.
- * <p>
- * It implements the IVertexData interface so that it can be converted into an array of floats, to
- * work with OpenGL buffers
+ * This class represents the attributes of a single vertex. It is useful in
+ * building PolygonMesh objects for many examples.
+ *
+ * It implements the IVertexData interface so that it can be converted into an
+ * array of floats, to work with OpenGL buffers
  */
 public class VertexAttrib implements util.IVertexData {
-
   private Vector4f position;
 
   public VertexAttrib() {
