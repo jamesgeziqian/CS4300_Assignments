@@ -1,0 +1,53 @@
+<scene>
+  <image name="bricks" path="textures/bricks.jpg"/>
+  <image name="tile" path="textures/tile.jpg"/>
+  <transform>
+    <set>
+      <scale>10 10 10</scale>
+      <translate>-29.5 0 0</translate>
+    </set>
+    <group>
+      <light>
+        <ambient>1 1 1</ambient>
+        <diffuse>1 1 1</diffuse>
+        <specular>1 1 1</specular>
+        <position>0 50 30</position>
+        <spotdirection>1 -1 -1</spotdirection>
+        <spotangle>20</spotangle>
+      </light>
+      <transform name="top-floor">
+        <set>
+          <translate>0 22 0</translate>
+        </set>
+        <group>
+          <light>
+            <ambient>1 1 1</ambient>
+            <diffuse>1 1 1</diffuse>
+            <specular>1 1 1</specular>
+            <position>53 40 11</position>
+            <spotdirection>0 -1 0</spotdirection>
+            <spotangle>15</spotangle>
+          </light>
+          <group from="scenegraphmodels/old-top-floor.xml"/>
+        </group>
+      </transform>
+      <transform name="second-floor">
+        <set>
+          <translate>0 11 0</translate>
+        </set>
+        <group from="scenegraphmodels/old-second-floor.xml"/>
+      </transform>
+      <transform name="first-floor">
+        <set/>
+        <group from="scenegraphmodels/old-first-floor.xml"/>
+      </transform>
+      <transform>
+        <set>
+          <translate>10 34 16</translate>
+          <scale>.5 .5 .5</scale>
+        </set>
+        <group from="scenegraphmodels/bell-tower.xml"/>
+      </transform>
+    </group>
+  </transform>
+</scene>
