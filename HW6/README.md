@@ -58,7 +58,7 @@ move-center [x] [y] [z]
 
   Each object in the scene graph can have a single texture attribute, but not multiple. The texture will be mapped to the object according to the texture mapping coordinate specified by the object file. The default texture is a picture filled with white pixels, if no specific texture is specified.
 
-    Two buildings are updated now to have textures and each have some lights on it.
+  Two buildings are updated now to have textures and each have some lights on it.
 
 ## Design of the code
 
@@ -71,19 +71,35 @@ move-center [x] [y] [z]
   Since camera and the drone is not in the same scene graph as other object in the scene. For drawing the flying drone correctly, lights on the drone must be switched on before any mesh in the scene is drawn. This might be a major draw-back of our code.
 
   Light in this model can shine through everything. There is no shades in the scene, unfortunately.
+  
+  When a point on a object is not shined by any light, this point will have a global ambient color, which is a constant times `material.ambient`, so that all points on object will at least be visible, not totally black.
 
   2. Texture
 
   When drawing an object, a material and a texture name will be passed with the object name to the renderer. Renderer will then send all information in material down to the shader and bind the matching texture to texture id 0 after setting needed parameters so that the shader will be using the bound texture image.
 
-## New Scene
+## Scene
 
   1. tower.xml
- 
-  Beside a spot light that is tied to the camera. There are two extra lights in the scenegraph. The first one is a spot light at the back of the building. It is a reddish light focus on the second floor. The Other one is a white parallel light shinning towards (-1,-1,0) which simulates the sun.
-  
+
   There are some textures tied to the scenegraph as well. The pillar of the first floor has a texture of a checkerboard. Glasses are broken. The big ball at the top of the building has a texture of moon surface. Also, all the walls share a texture of metal.
-  
+
+  Due to materials defined in this scene graph, there may be some angle of view that will make part of the building totally black. This phenomenon is expected.
+
+  2. old-hall.xml
+
+  All walls are mapped with a texture of bricks. The roof is mapped with a texture of tiles. Pillars and sills are not specifically textured because they are designed to have a texture of white. Window-grids are also not mapped to any textured since the structure is too tiny.
+
+  Materials of object in this scene are not changed, still defining materials with `color` tag. Thus, this building is backward compatible. The process parsing `color` tag in xml file is also modified to support this. When a `color` tag is read, three values in `color` tag will be scalar factored and stored in ambient, diffuse, and specular.
+
+  3. town-hall.xml
+
+  This scene consist two buildings together, where the tower is set at the back of the old hall. Beside a spot light that is tied to the camera, four extra lighting is added, two for each building.
+
+  On the tower, the first one is a spot light at the back of the building. It is a reddish light focus on the second floor. The Other one is a white parallel light shinning towards (-1,-1,0) which simulates the sun.
+
+  On the old hall, One is a white spot light in front of the tower at the roof, facing downwards. Another one is also a white spot light but above the right part of the roof, shining downwards, which can be clearly visible if looking from the back side of the hall.
+
 ## Citation
 
   1. tile.jpg, 3D texture library,  http://www.3dczk.com/map1/wa/2016/0620/3491.html

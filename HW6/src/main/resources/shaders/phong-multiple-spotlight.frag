@@ -54,7 +54,7 @@ void main()
             lightVec = normalize(-light[i].position.xyz);
             normalLightDirect = normalize(light[i].position.xyz);
         }
-
+        
         vec3 tNormal = fNormal;
         normalView = normalize(tNormal.xyz);
         nDotL = dot(normalView, lightVec);
