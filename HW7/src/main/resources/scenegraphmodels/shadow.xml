@@ -1,0 +1,138 @@
+<scene>
+  <instance name="sphere" path="models/sphere.obj"/>
+  <instance name="cone" path="models/cone.obj"/>
+  <instance name="cylinder" path="models/cylinder.obj"/>
+  <instance name="box" path="models/box-outside.obj"/>
+
+  <image name="earth" path="textures/earthmap.jpg"/>
+  <image name="earthp" path="textures/politicalWorldMap.jpg"/>
+  <image name="cb" path="textures/checkerboard.jpg"/>
+  <image name="metal" path="textures/brushedMetal.jpg"/>
+  <image name="die" path="textures/die.png"/>
+
+  <transform>
+    <set>
+      <!--<rotate>-12 0 1 0</rotate>-->
+    </set>
+    <group>
+      <!--<light>-->
+        <!--<ambient>.8 .8 .8</ambient>-->
+        <!--<diffuse>.8 .8 .8</diffuse>-->
+        <!--<specular>.8 .8 .8</specular>-->
+        <!--<direction>-1 -1 0</direction>-->
+      <!--</light>-->
+
+      <!--<light>-->
+        <!--<ambient>.8 .8 .8</ambient>-->
+        <!--<diffuse>.8 .8 .8</diffuse>-->
+        <!--<specular>.8 .8 .8</specular>-->
+        <!--<direction>1 -1 0</direction>-->
+      <!--</light>-->
+
+      <light>
+        <ambient>.4 .4 .4</ambient>
+        <diffuse>.4 .4 .4</diffuse>
+        <specular>.4 .4 .4</specular>
+        <direction>-1 -1 0</direction>
+      </light>
+
+      <light>
+        <ambient>.4 .4 .4</ambient>
+        <diffuse>.4 .4 .4</diffuse>
+        <specular>.4 .4 .4</specular>
+        <direction>0 -1 -1</direction>
+      </light>
+
+      <!--<transform>-->
+        <!--<set>-->
+          <!--<translate>8 5 0</translate>-->
+          <!--<scale>5 5 5</scale>-->
+        <!--</set>-->
+        <!--<object instanceof="sphere" texture="earth">-->
+          <!--<material>-->
+            <!--<ambient>.5 .5 .5</ambient>-->
+            <!--<diffuse>.4 .4 .4</diffuse>-->
+            <!--<specular>.9 .9 .9</specular>-->
+            <!--&lt;!&ndash;<absorption>.5</absorption>&ndash;&gt;-->
+            <!--&lt;!&ndash;<reflection>.5</reflection>&ndash;&gt;-->
+            <!--&lt;!&ndash;<ambient>.8 .4 .2</ambient>&ndash;&gt;-->
+            <!--&lt;!&ndash;<diffuse>.3 .15 .075</diffuse>&ndash;&gt;-->
+            <!--&lt;!&ndash;<specular>.6 .3 .15</specular>&ndash;&gt;-->
+            <!--<shininess>100</shininess>-->
+          <!--</material>-->
+        <!--</object>-->
+      <!--</transform>-->
+
+      <transform>
+        <set>
+          <translate>-8 5 0</translate>
+          <scale>5 5 5</scale>
+        </set>
+        <object instanceof="sphere" texture="earthp">
+          <material>
+            <ambient>.1 .1 .1</ambient>
+            <diffuse>.4 .4 .4</diffuse>
+            <specular>.9 .9 .9</specular>
+            <shininess>100</shininess>
+          </material>
+        </object>
+      </transform>
+
+
+
+
+      <transform>
+        <set>
+          <translate>0 -.5 0</translate>
+          <scale>50 1 50</scale>
+        </set>
+        <object instanceof="box">
+          <material>
+            <ambient>.5 .5 .5</ambient>
+            <diffuse>.4 .4 .4</diffuse>
+            <specular>.8 .8 .8</specular>
+            <absorption>.5</absorption>
+            <reflection>.5</reflection>
+            <shininess>100</shininess>
+          </material>
+        </object>
+      </transform>
+
+      <transform>
+        <set>
+          <translate>-25 25 0</translate>
+          <rotate>90 0 0 1</rotate>
+          <scale>50 1 50</scale>
+        </set>
+        <object instanceof="box">
+          <material>
+            <ambient>.5 .5 .5</ambient>
+            <diffuse>.4 .4 .4</diffuse>
+            <specular>.8 .8 .8</specular>
+            <absorption>.5</absorption>
+            <reflection>.5</reflection>
+            <shininess>100</shininess>
+          </material>
+        </object>
+      </transform>
+
+      <transform>
+        <set>
+          <translate>0 25 -25</translate>
+          <rotate>90 1 0 0</rotate>
+          <scale>50 1 50</scale>
+        </set>
+        <object instanceof="box">
+          <material>
+            <ambient>.5 .5 .5</ambient>
+            <diffuse>.4 .4 .4</diffuse>
+            <specular>.8 .8 .8</specular>
+            <absorption>.5</absorption>
+            <reflection>.5</reflection>
+            <shininess>100</shininess>
+          </material>
+        </object>
+      </transform>
+    </group>
+  </transform>
+</scene>
