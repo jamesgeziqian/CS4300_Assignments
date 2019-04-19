@@ -518,7 +518,6 @@ public class RayTraceRenderer extends LightScenegraphRenderer {
         Matrix4f invTranspose = new Matrix4f(modelView).transpose().invert();
         invTranspose.transform(normal);
         // set refraction
-        hitSetFraction(t, tMax, tMin, hit, mat);
         hit.setNormal(normal.x, normal.y, normal.z);
 
         // set texture
@@ -554,6 +553,7 @@ public class RayTraceRenderer extends LightScenegraphRenderer {
       }
 
     }
+    this.hitSetFraction(result, vector);
     return result;
   }
 
